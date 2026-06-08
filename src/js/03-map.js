@@ -800,41 +800,44 @@ function generateCastle(returnVisit = false) {
                                                                     const npc = gameState.shopNPCs.find(n => n.x === x && n.y === y);
                                                                     if (npc) {
                                                                         text = npc.icon;
-                                                                         className = 'shop-npc';
-                                                                     } else {
+                                                                        className = 'shop-npc';
+                                                                    } else {
                                                                          text = themeObj.floor;
                                                                          className = 'floor ' + (gameState.theme || 'abyss') + '-floor';
                                                                          style = `color:${themeObj.floorColor}`;
                                                                      }
                                                                  } else {
-                                                                     // 城堡：检查 NPC 和传送门
-                                                                     if (isCastle) {
-                                                                         const cnpc = gameState.castleNPCs.find(n => n.x === x && n.y === y);
-                                                                         if (cnpc) {
-                                                                             text = cnpc.icon;
-                                                                             className = 'shop-npc';
-                                                                             style = 'color:#fa0; font-size:1.4em; cursor:pointer;';
-                                                                         } else if (x === gameState.castlePortal.x && y === gameState.castlePortal.y) {
-                                                                                                                                                     text = '🌀';
-                                                                                                                                                     className = 'exit';
-                                                                                                                                                     style = 'font-size:2em;';
-                                                                                                                                                 } else {
-                                                                                                                                                     // 检查装饰物
-                                                                                                                                                     const deco = gameState.castleDecorations.find(d => d.x === x && d.y === y);
-                                                                                                                                                     if (deco) {
-                                                                                                                                                         text = deco.icon; className = 'deco'; style = `color:${deco.color}; font-size:${deco.size};`;
-                                                                                                                                                     } else if (gameState.castleCarpet && gameState.castleCarpet.find(c => c.x === x && c.y === y)) {
-                                                                                                                                                         text = '◆'; className = 'floor'; style = 'color:#a33;';
-                                                                                                                                                     } else {
-                                                                                                                                                         text = themeObj.floor;
-                                                                                                                                                         className = 'floor castle-floor';
-                                                                                                                                                         style = `color:${themeObj.floorColor}`;
-                                                                                                                                                     }
-                                                                                                                                                 }
-                                                                    } else {
+                                                                    // 城堡：检查 NPC 和传送门
+                                                                    if (isCastle) {
+                                                                        const cnpc = gameState.castleNPCs.find(n => n.x === x && n.y === y);
+                                                                        if (cnpc) {
+                                                                            text = cnpc.icon;
+                                                                            className = 'shop-npc';
+                                                                            style = 'color:#fa0; font-size:1.4em; cursor:pointer;';
+                                                                        } else if (x === gameState.castlePortal.x && y === gameState.castlePortal.y) {
+                                                                                                                                                    text = '🌀';
+                                                                                                                                                    className = 'exit';
+                                                                                                                                                    style = 'font-size:2em;';
+                                                                                                                                                } else {
+                                                                                                                                                    // 检查装饰物
+                                                                                                                                                    const deco = gameState.castleDecorations.find(d => d.x === x && d.y === y);
+                                                                                                                                                    if (deco) {
+                                                                                                                                                        text = deco.icon; className = 'deco'; style = `color:${deco.color}; font-size:${deco.size};`;
+                                                                                                                                                    } else if (gameState.castleCarpet && gameState.castleCarpet.find(c => c.x === x && c.y === y)) {
+                                                                                                                                                        text = '◆'; className = 'floor'; style = 'color:#a33;';
+                                                                                                                                                    } else {
                                                                         text = themeObj.floor;
                                                                          className = 'floor ' + (gameState.theme || 'abyss') + '-floor';
                                                                          style = `color:${themeObj.floorColor}`;
+                                                                     }
+                                                                                                                                                }
+                                                                    } else {
+                                                                        text = themeObj.floor;
+                                                                        className = 'floor';
+                                                                        style = `color:${themeObj.floorColor}`;
+                                                                    }
+                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                        }
                                                                                                                                                                                                                                                                                                                                                                                                     }
                                                                                                                                                                                                                                                                                                                                                                                                 }
 
