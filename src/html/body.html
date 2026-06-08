@@ -1,0 +1,415 @@
+<!-- 音效开关按钮 -->
+    <button id="sfx-toggle" onclick="toggleSfx()" title="音效开关">🔊</button>
+    <button id="auto-attack-toggle" onclick="toggleAutoAttack()" title="自动攻击">🗡️</button>
+    <button id="settings-toggle" onclick="openSettings()" title="游戏设置">⚙️</button>
+    
+    <!-- [BGM 已禁用 - 保留备份] <button id="bgm-toggle" onclick="toggleBgm()" title="BGM开关" style="top: 58px;">🎵</button> -->
+    
+<!-- ==================== 开场动画 ==================== -->
+<div id="intro-animation">
+    <div class="intro-particles" id="intro-particles"></div>
+    <div id="intro-vignette"></div>
+    <div class="intro-line" id="intro-line-1">> 系统初始化中...</div>
+    <div class="intro-line" id="intro-line-2">> 深渊链接建立</div>
+    <div class="intro-line" id="intro-line-3">> 检测到古老信标信号</div>
+    <div class="intro-line" id="intro-line-4">> 迷宫入口已开启</div>
+    <div class="intro-title-wrap" id="intro-title-wrap">
+        <div class="intro-title" id="intro-title">深渊文字迷宫</div>
+    </div>
+    <div class="intro-subtitle" id="intro-subtitle">■ ABYSS TEXT LABYRINTH ■</div>
+    <div class="intro-skip" onclick="skipIntro()">[ 按任意键 进入深渊 ]</div>
+</div>
+    
+    <!-- ==================== 开始界面 ==================== -->
+        <div id="start-screen">
+                <!-- 城堡背景层 -->
+                <canvas id="start-castle-bg"></canvas>
+                <div id="start-panel">
+                <h1>深渊文字迷宫</h1>
+                <div class="subtitle">—— Text-based Roguelike ——</div>
+                <div id="best-record">🏆 <span id="br-text">暂无记录</span></div>
+            
+                <button class="start-btn-big" id="new-game-btn" onclick="startGame()">🎮 开始新冒险</button>
+                <button class="start-btn-big" id="continue-btn" onclick="continueGame()">
+                    ▶ 继续游戏
+                    <div class="cont-info" id="cont-info"></div>
+                </button>
+
+                <!-- 头像 + 角色名 -->
+                <div class="name-row">
+                    <div class="avatar-upload" id="avatar-upload-box" onclick="document.getElementById('avatar-input').click()">
+                        <span class="avatar-placeholder" id="avatar-placeholder"><div class="pxl-avatar pxl-warrior" id="start-avatar-pxl"></div></span>
+                        <img id="avatar-preview" style="display:none" alt="头像预览">
+                        <input type="file" id="avatar-input" accept="image/*" onchange="previewAvatar(event)">
+                    </div>
+                    <input type="text" id="player-name-input" maxlength="8" placeholder="无名勇者" autocomplete="off">
+                    <button class="sbb-btn" id="random-name-btn" onclick="generateRandomName()" title="随机名字" style="padding:9px 12px;">🎲</button>
+                </div>
+
+                <!-- 职业选择：紧凑一行 -->
+                <div class="class-row" id="class-cards"></div>
+
+                <!-- 中间按钮行 -->
+                <div class="ach-row-start">
+                    <button class="lb-btn lb-btn-sm" onclick="showLeaderboard()">🏆 排行榜</button>
+                    <button class="lb-btn lb-btn-sm" onclick="showAchievePanel()">🏅 成就</button>
+                    <button class="lb-btn lb-btn-sm" onclick="showWorkshop()">⚒️ 工坊</button>
+                    <button class="lb-btn lb-btn-sm" onclick="showCodex()">📖 图鉴</button>
+                </div>
+
+                <!-- 底部操作栏 -->
+                <div id="start-bottom-bar">
+                    <button class="sbb-btn" id="sfx-btn-start" onclick="toggleSfx()">🔊 音效</button>
+                                    <button class="sbb-btn" onclick="showKeyHelp()">⌨️ 键位</button>
+                                    <button class="sbb-btn" id="auto-atk-btn-start" onclick="toggleAutoAttack()">⚔️ 自动</button>
+                    <button class="sbb-btn" onclick="openSettings()">⚙️ 设置</button>
+                    <span id="start-version">v3.20.0</span>
+                </div>
+            </div>
+        </div>
+    
+    <!-- 主容器：左右分栏 -->
+    
+    <!-- 敌人属性面板 (v3.36.0 — 战斗时显示) -->
+    <div id="enemy-info-panel" style="display:none;">
+        <div class="enemy-hp-bar-container">
+            <div id="enemy-hp-bar-fill" style="width:100%;"></div>
+            <span id="enemy-hp-text" style="font-size:11px;font-weight:bold;"></span>
+        </div>
+        <div id="enemy-info-name" style="font-size:16px;font-weight:bold;margin-top:3px;"></div>
+        <div id="enemy-info-type" style="font-size:11px;margin-top:2px;"></div>
+        <div id="enemy-info-stats" style="font-size:11px;margin-top:5px;color:#aaa;"></div>
+    </div>
+    <div class="game-container">
+        
+        <!-- ==================== 左侧边栏 ==================== -->
+        <aside class="sidebar">
+            
+            <!-- 角色信息面板 -->
+            <div class="panel">
+                <div class="panel-title">🧙 角色</div>
+                <div class="char-info">
+                    <div id="sidebar-avatar-wrap">
+                        <div class="char-avatar-placeholder" id="sidebar-avatar-placeholder"><div class="pxl-avatar pxl-warrior" id="sidebar-avatar-pxl"></div></div>
+                        <img class="char-avatar" id="sidebar-avatar" style="display:none" alt="头像">
+                    </div>
+                    <div class="char-name-row">
+                        <span class="char-name" id="sidebar-name">无名勇者</span>
+                        <span class="char-class-inline" id="sidebar-class" style="color:#0f0;font-size:11px;">🗡️ 战士</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 状态面板 -->
+                        <div class="panel">
+                            <div class="panel-title">📊 角色状态</div>
+                            <!-- HP 血条 -->
+                            <div class="hp-bar-container">
+                                <div class="hp-bar-fill" id="hp-bar-fill" style="width: 100%"></div>
+                                <span class="hp-bar-text bar-text" id="stat-hp">100/100</span>
+                            </div>
+                            <!-- 属性网格 2×2 -->
+                            <div class="stat-grid">
+                                <div class="stat-cell"><span class="stat-icon">🗡️</span><span class="stat-val" id="stat-atk">10</span></div>
+                                <div class="stat-cell"><span class="stat-icon">🛡️</span><span class="stat-val" id="stat-def">5</span></div>
+                                <div class="stat-cell"><span class="stat-icon">💰</span><span class="stat-val" id="stat-gold">0</span></div>
+                                <div class="stat-cell"><span class="stat-icon">⭐</span><span class="stat-val" id="stat-level">1</span></div>
+                            </div>
+                            <!-- 经验条 -->
+                            <div class="exp-bar-container">
+                                <div class="exp-bar-fill" id="exp-bar-fill" style="width: 0%"></div>
+                                <span class="exp-bar-text bar-text" id="stat-exp">0/50</span>
+                            </div>
+                        </div>
+            
+<!-- 装备面板 3×3 -->
+            <div class="panel" id="equip-panel">
+                <div class="panel-title">🎒 装备</div>
+                <div class="equip-grid" id="equip-grid">
+                    <div class="equip-slot" id="eslot-mainHand"><span class="es-icon">🗡️</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-offHand"><span class="es-icon">🛡️</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-helmet"><span class="es-icon">🎩</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-chest"><span class="es-icon">👕</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-gloves"><span class="es-icon">🧤</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-boots"><span class="es-icon">👢</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-ring1"><span class="es-icon">💍</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-ring2"><span class="es-icon">💍</span><span class="es-name">空</span></div>
+                    <div class="equip-slot" id="eslot-necklace"><span class="es-icon">🧿</span><span class="es-name">空</span></div>
+                </div>
+            </div>
+            
+            <!-- 药水背包栏 (v3.26.0) -->
+            <div class="panel" id="potion-belt-panel">
+                <div class="panel-title">🧪 药水背包 <span style="font-size:10px;color:#888;">[1-4]</span></div>
+                <div class="potion-belt" id="potion-belt">
+                    <div class="potion-slot" id="pbelt-0" onclick="usePotionFromBelt(0)"><span class="pb-key">1</span><span class="pb-icon">—</span></div>
+                    <div class="potion-slot" id="pbelt-1" onclick="usePotionFromBelt(1)"><span class="pb-key">2</span><span class="pb-icon">—</span></div>
+                    <div class="potion-slot" id="pbelt-2" onclick="usePotionFromBelt(2)"><span class="pb-key">3</span><span class="pb-icon">—</span></div>
+                    <div class="potion-slot" id="pbelt-3" onclick="usePotionFromBelt(3)"><span class="pb-key">4</span><span class="pb-icon">—</span></div>
+                </div>
+            </div>
+            
+            <!-- 天赋面板 -->
+            <div class="panel" id="talent-panel">
+                <div class="panel-title">⭐ 天赋</div>
+                <div class="talent-points" id="talent-points-display">可用天赋点: 0</div>
+                <div class="talent-list" id="talent-list"></div>
+                <button class="skill-btn cooldown" id="skill-btn" onclick="useActiveSkill()">🔒 未学习技能</button>
+            </div>
+            
+            <!-- 楼层信息面板 -->
+            <div class="panel">
+                <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;">
+                    <span>🏰 楼层信息</span>
+                    <span id="info-theme" style="font-size:12px;color:#0f0;">🌑 深渊</span>
+                </div>
+                <div id="floor-info">
+                    <div class="floor-card">
+                        <span class="floor-card-icon">🏰</span>
+                        <span class="floor-card-value" id="info-floor">1</span>
+                        <span class="floor-card-label">层数</span>
+                    </div>
+                    <div class="floor-card">
+                        <span class="floor-card-icon">💀</span>
+                        <span class="floor-card-value" id="info-enemy">普通</span>
+                        <span class="floor-card-label">强度</span>
+                    </div>
+                    <div class="floor-card">
+                        <span class="floor-card-icon">👹</span>
+                        <span class="floor-card-value" id="info-enemies">0</span>
+                        <span class="floor-card-label">敌人</span>
+                    </div>
+                    <div class="floor-card">
+                        <span class="floor-card-icon">🎁</span>
+                        <span class="floor-card-value" id="info-chests">0</span>
+                        <span class="floor-card-label">宝箱</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 按键说明面板 -->
+                        <div id="key-hint-panel">
+                            <div class="kh-title">⌨️ 按键说明</div>
+                            <div class="kh-section">🎮 操作</div>
+                            <div class="kh-row"><span><span class="kh-key">↑↓←→</span></span><span class="kh-desc">移动</span></div>
+                            <div class="kh-row"><span><span class="kh-key">C</span></span><span class="kh-desc">角色面板</span></div>
+                            <div class="kh-row"><span><span class="kh-key">Tab</span></span><span class="kh-desc">装备详情</span></div>
+                            <div class="kh-row"><span><span class="kh-key">Q</span></span><span class="kh-desc">主动技能</span></div>
+                            <div class="kh-row"><span><span class="kh-key">P</span></span><span class="kh-desc">成就面板</span></div>
+                            <div class="kh-row"><span><span class="kh-key">ESC</span></span><span class="kh-desc">关闭弹窗</span></div>
+                            <div class="kh-row"><span><span class="kh-key">`</span></span><span class="kh-desc">精灵模式</span></div>
+                            <div class="kh-section">🧪 药水</div>
+                                                        <div class="kh-row"><span><span class="kh-key">1-4</span></span><span class="kh-desc">使用背包药水</span></div>
+                                                        <div class="kh-section">🔧 调试</div>
+                                                        <div class="kh-row"><span><span class="kh-key">0</span></span><span class="kh-desc">无敌</span></div>
+                                                        <div class="kh-row"><span><span class="kh-key">5</span></span><span class="kh-desc">秒杀</span></div>
+                            <div class="kh-row"><span><span class="kh-key">9</span></span><span class="kh-desc">跳Boss层</span></div>
+                            <div class="kh-row"><span><span class="kh-key">8</span></span><span class="kh-desc">跳商店层</span></div>
+                            <div class="kh-row"><span><span class="kh-key">7</span></span><span class="kh-desc">+500金币</span></div>
+                                <div class="kh-row"><span><span class="kh-key">6</span></span><span class="kh-desc">满血恢复</span></div>
+                                <div class="kh-row"><span><span class="kh-key">空格</span></span><span class="kh-desc">下一层</span></div>
+                            </div>
+
+                            
+                            </aside>
+        
+        <!-- ==================== 右侧主区域 ==================== -->
+        <div class="main-area">
+            
+            <!-- 迷宫地图 -->
+            <div id="game-view">
+                <div id="map-display"></div>
+            </div>
+            
+            <!-- 底部日志区 -->
+            <div id="log-container">
+                <div id="game-log"></div>
+            </div>
+            
+        </div><!-- .main-area -->
+        
+    </div><!-- .game-container -->
+    
+    <!-- 游戏结束覆盖层 -->
+    <div id="game-over">
+        <h1>GAME OVER</h1>
+        <p><span id="final-name">无名勇者</span> <span id="final-class">🗡️ 战士</span> 存活了 <span id="final-floor">0</span> 层</p>
+        <button id="restart-btn" onclick="backToStart()">重新开始</button>
+                <p style="margin-top:12px;"><span id="final-score">得分: -</span></p>
+                <p><span id="final-score-detail"></span></p>
+                <button class="lb-btn lb-btn-sm" onclick="showLeaderboard()" style="margin-top:4px;">🏆 查看排行榜</button>
+                    </div>
+    
+            <!-- 成就弹窗 -->
+            <div id="achieve-toast">
+                <span class="ach-icon"></span>
+                <div class="ach-info">
+                    <div class="ach-name"></div>
+                    <div class="ach-desc"></div>
+                </div>
+            </div>
+    
+            <!-- 成就面板 -->
+            <div id="achieve-panel">
+                            <h2>🏆 成就</h2>
+                            <div class="ach-inner">
+                                <div class="ach-progress" id="ach-progress"></div>
+                                <div id="achieve-list"></div>
+                                <div style="text-align:center; margin-top:15px;">
+                                    <button onclick="document.getElementById('achieve-panel').style.display='none'" 
+                                        style="background:#333;color:#fa0;border:1px solid #fa0;padding:8px 24px;border-radius:6px;cursor:pointer;">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+    
+            <!-- 商店弹窗 -->
+    <div id="shop-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: #1a1a1a; border: 3px solid #ffa500; border-radius: 10px; padding: 20px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #ffa500; padding-bottom: 10px;">
+                <h2 style="color: #ffa500; margin: 0; font-size: 20px;" id="shop-title">🏪 商店</h2>
+                <div style="color: #ffd700; font-size: 16px; font-weight: bold;">💰 <span id="shop-gold">0</span>G</div>
+            </div>
+            <div id="shop-items-container"></div>
+            <button onclick="closeShop()" style="margin-top: 15px; padding: 8px 20px; background: #444; color: #fff; border: 2px solid #ffa500; border-radius: 5px; cursor: pointer; font-size: 14px; width: 100%;">关闭商店</button>
+        </div>
+    </div>
+    
+    <!-- 天赋选择弹窗 -->
+    <div id="talent-modal">
+        <div class="talent-modal-inner">
+            <div class="talent-modal-title">⭐ 选择天赋</div>
+            <div class="talent-modal-subtitle" id="talent-modal-subtitle">剩余天赋点: 0</div>
+            <div id="talent-trees-container"></div>
+            <button onclick="closeTalentModal()" style="margin-top: 15px; padding: 8px 20px; background: #444; color: #fff; border: 2px solid #ff0; border-radius: 5px; cursor: pointer; font-size: 14px; width: 100%;">关闭</button>
+        </div>
+    </div>
+    
+    
+    <!-- 装备详情弹窗 -->
+    <div id="equip-detail-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; align-items:center; justify-content:center;">
+        <div style="background:#111; border:3px solid #0ff; border-radius:12px; padding:20px; max-width:700px; width:94%; max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:2px solid #0ff; padding-bottom:8px;">
+                <h2 style="color:#0ff; margin:0; font-size:18px;">🎒 装备详情 [Tab]</h2>
+                <span style="color:#888; font-size:12px;">总加成: <span id="ed-total-bonus" style="color:#0f0;">-</span></span>
+            </div>
+            <div id="equip-detail-content"></div>
+            <button onclick="closeEquipDetail()" style="margin-top:12px; padding:8px 20px; background:#444; color:#fff; border:2px solid #0ff; border-radius:5px; cursor:pointer; font-size:14px; width:100%;">关闭 [Tab]</button>
+        </div>
+    </div>
+
+        <!-- 升级选项弹窗 -->
+    <div id="levelup-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3200; align-items:center; justify-content:center;">
+        <div style="background:#111; border:3px solid #ff0; border-radius:12px; padding:24px; max-width:600px; width:90%;">
+            <div style="text-align:center; margin-bottom:16px;">
+                <div style="color:#ff0; font-size:22px; font-weight:bold;">🎉 升级！</div>
+                <div style="color:#0f0; font-size:16px; margin-top:4px;">Lv.<span id="lu-level">1</span> → Lv.<span id="lu-newlevel">2</span></div>
+                <div style="color:#888; font-size:12px; margin-top:4px;">选择一个属性加成</div>
+            </div>
+            <div id="levelup-choices" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+    </div>
+
+    <!-- 装备对比弹窗 -->
+    <div id="equip-compare-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:3300; align-items:center; justify-content:center;">
+        <div style="background:#111; border:3px solid #fa0; border-radius:12px; padding:20px; max-width:700px; width:92%;">
+            <div style="text-align:center; color:#fa0; font-size:18px; font-weight:bold; margin-bottom:12px;">📦 获得新装备</div>
+            <div id="equip-compare-content" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;"></div>
+            <div style="display:flex; gap:10px;">
+                <button onclick="equipCompareChoose(true)" style="flex:1; padding:10px; background:#0a2a0a; border:2px solid #0f0; border-radius:6px; color:#0f0; font-size:15px; font-weight:bold; cursor:pointer;">✅ 替换</button>
+                <button onclick="equipCompareChoose(false)" style="flex:1; padding:10px; background:#2a0a0a; border:2px solid #f00; border-radius:6px; color:#f66; font-size:15px; font-weight:bold; cursor:pointer;">❌ 放弃</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 角色属性详情面板 [C键] -->
+        <div id="char-sheet-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:3100; align-items:center; justify-content:center;">
+                <div style="background:#111; border:3px solid #0f0; border-radius:12px; padding:16px 20px; max-width:960px; width:95%; max-height:92vh; overflow:hidden;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:2px solid #0f0; padding-bottom:6px;">
+                        <h2 style="color:#0f0; margin:0; font-size:18px;">📋 角色属性</h2>
+                        <span style="color:#888; font-size:12px;">[C] / [ESC] 关闭</span>
+                    </div>
+                    <div id="char-sheet-content" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;"></div>
+                </div>
+            </div>
+
+                <!-- 祭坛：献祭装备弹窗 -->
+                <div id="altar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:3200; align-items:center; justify-content:center;">
+                    <div style="background:#111; border:3px solid #c6f; border-radius:12px; padding:20px; max-width:650px; width:92%; max-height:80vh; overflow-y:auto;">
+                        <div id="altar-content"></div>
+                    </div>
+                </div>
+
+                <!-- 图书馆：免费学天赋弹窗 -->
+                    <div id="library-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:3200; align-items:center; justify-content:center;">
+                        <div style="background:#111; border:3px solid #6cf; border-radius:12px; padding:20px; max-width:650px; width:92%; max-height:80vh; overflow-y:auto;">
+                            <div id="library-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- 药水拾取弹窗 (v3.26.0) -->
+    <div id="potion-pickup-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); z-index:3400; align-items:center; justify-content:center;">
+        <div style="background:#111; border:3px solid #0f0; border-radius:12px; padding:20px; max-width:500px; width:90%; text-align:center;">
+            <div style="font-size:36px; margin-bottom:8px;" id="pp-icon"></div>
+            <div style="color:#ffd700; font-size:20px; font-weight:bold; margin-bottom:4px;" id="pp-name"></div>
+            <div style="color:#aaa; font-size:13px; margin-bottom:16px;" id="pp-desc"></div>
+            <div id="pp-belt-warning" style="color:#f66; font-size:12px; margin-bottom:10px; display:none;">⚠️ 背包已满，放入将替换一个药水</div>
+            <div id="pp-belt-slots" style="display:none; margin-bottom:12px;"></div>
+            <div style="display:flex; gap:8px; justify-content:center;">
+                <button id="pp-drink-btn" onclick="choosePotionAction('drink')" style="padding:10px 18px; background:#0a2a0a; border:2px solid #0f0; border-radius:6px; color:#0f0; font-size:14px; cursor:pointer; flex:1;">🧪 立即喝下</button>
+                <button id="pp-belt-btn" onclick="choosePotionAction('belt')" style="padding:10px 18px; background:#1a1a0a; border:2px solid #ffd700; border-radius:6px; color:#ffd700; font-size:14px; cursor:pointer; flex:1;">🎒 放入背包</button>
+                <button id="pp-discard-btn" onclick="choosePotionAction('discard')" style="padding:10px 18px; background:#2a0a0a; border:2px solid #f44; border-radius:6px; color:#f66; font-size:14px; cursor:pointer; flex:1;">🗑️ 丢弃</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 许愿井弹窗 (v3.28.0) -->
+    <div id="well-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3500; align-items:center; justify-content:center;">
+        <div style="background:#111; border:3px solid #ff0; border-radius:12px; padding:20px; max-width:450px; width:90%;">
+            <div id="well-content"></div>
+        </div>
+    </div>
+
+    <!-- 特殊房间发现弹窗 (v3.41.2) -->
+    <div id="special-room-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:3600; align-items:center; justify-content:center;">
+    </div>
+
+    <!-- 铁匠铺：强化+合成弹窗 -->
+                    <div id="blacksmith-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:3200; align-items:center; justify-content:center;">
+                        <div style="background:#111; border:3px solid #f90; border-radius:12px; padding:20px; max-width:700px; width:94%; max-height:85vh; overflow-y:auto;">
+                            <div style="text-align:center;color:#f90;font-size:18px;font-weight:bold;margin-bottom:8px;">🏗️ 铁匠铺</div>
+                            <div style="display:flex;gap:8px;margin-bottom:12px;">
+                                <button id="bs-tab-enhance" onclick="switchBlacksmithTab('enhance')" style="flex:1;padding:8px;background:#2a1a00;border:2px solid #f90;border-radius:6px;color:#f90;font-size:14px;font-weight:bold;cursor:pointer;">🔨 强化装备</button>
+                                <button id="bs-tab-synth" onclick="switchBlacksmithTab('synth')" style="flex:1;padding:8px;background:#111;border:2px solid #555;border-radius:6px;color:#888;font-size:14px;cursor:pointer;">⚗️ 合成装备</button>
+                            </div>
+                            <div id="blacksmith-content"></div>
+                            <div style="text-align:center;margin-top:12px;"><button onclick="closeBlacksmith()" style="padding:6px 20px;background:#333;color:#aaa;border:1px solid #555;border-radius:4px;cursor:pointer;font-size:14px;">[ESC] 离开</button></div>
+                        </div>
+                    </div>
+
+                <!-- === 设置面板 (v3.36.0) === -->
+                <div id="settings-modal">
+                    <div class="settings-inner">
+                        <div class="settings-title">⚙️ 游戏设置</div>
+
+                        <div class="settings-group-title">🎨 视觉增强</div>
+
+                        <div class="settings-row">
+                            <label>敌人属性面板</label>
+                            <span class="settings-desc">战斗中显示敌人HP条</span>
+                            <div class="toggle-switch active" id="toggle-enemyInfoPanel" onclick="toggleSetting('enemyInfoPanel', this)"></div>
+                        </div>
+
+                        <div class="settings-row">
+                            <label>伤害数字显示</label>
+                            <span class="settings-desc">浮动动画伤害数字</span>
+                            <div class="toggle-switch active" id="toggle-damageNumbers" onclick="toggleSetting('damageNumbers', this)"></div>
+                        </div>
+
+
+                        <div class="settings-btn-row">
+                            <button class="btn-save-settings" onclick="saveSettingsAndClose()">💾 保存</button>
+                            <button class="btn-reset-settings" onclick="resetSettingsAndClose()">↺ 重置</button>
+                            <button onclick="closeSettings()" style="background:#222;border-color:#888;color:#aaa;">取消</button>
+                        </div>
+                    </div>
+                </div>

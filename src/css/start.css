@@ -1,0 +1,400 @@
+/* ==================== 开始界面 - 城堡主题 ==================== */
+        #start-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(180deg, #0a0015 0%, #12002a 15%, #1a0030 30%, #0d0018 60%, #000 100%);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 200;
+            overflow: hidden;
+        }
+        /* 星空 */
+        #start-screen::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 60%;
+            background:
+                radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 25% 8%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1.5px 1.5px at 40% 20%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 55% 12%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1.5px 1.5px at 85% 10%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 60% 28%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 90% 22%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 33% 5%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 78% 6%, rgba(255,255,255,0.5), transparent);
+        }
+        /* 月亮 */
+        #start-screen::after {
+            content: '';
+            position: absolute;
+            top: 8%; right: 15%;
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,240,200,0.3) 0%, rgba(255,220,150,0.1) 40%, transparent 70%);
+            box-shadow: 0 0 40px rgba(200,180,255,0.2), 0 0 80px rgba(150,130,255,0.1);
+            pointer-events: none;
+        }
+        /* 城堡剪影层 */
+        #start-castle-bg {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 55%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        /* 前景面板 */
+        #start-panel {
+            position: relative;
+            z-index: 10;
+            background: rgba(8,6,20,0.85);
+            border: 1px solid rgba(180,160,120,0.25);
+            border-radius: 20px;
+            padding: 32px 44px;
+            min-width: 430px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 80px rgba(100,60,180,0.08), 0 20px 60px rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        #start-panel h1 {
+            color: #e8d5a0;
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0 0 6px;
+            text-shadow: 0 0 30px rgba(200,160,80,0.5), 0 0 60px rgba(180,120,40,0.3);
+            letter-spacing: 5px;
+            font-family: 'Georgia', 'SimSun', serif;
+        }
+        #start-panel .subtitle {
+            color: #8a7a5a;
+            font-size: 13px;
+            margin-bottom: 18px;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        /* 历史最佳 */
+        #best-record {
+            color: #9a8a6a;
+            font-size: 13px;
+            margin-bottom: 14px;
+            padding: 8px 16px;
+            background: rgba(200,160,80,0.06);
+            border: 1px solid rgba(200,160,80,0.2);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        /* 大按钮 */
+        .start-btn-big {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid rgba(200,160,80,0.5);
+            background: linear-gradient(180deg, rgba(40,25,10,0.8), rgba(20,12,5,0.9));
+            color: #e8c860;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(200,160,80,0.3);
+        }
+        .start-btn-big:hover {
+            background: linear-gradient(180deg, rgba(60,35,15,0.9), rgba(30,18,8,0.95));
+            border-color: rgba(220,180,100,0.8);
+            box-shadow: 0 0 30px rgba(200,160,80,0.2), inset 0 0 20px rgba(200,160,80,0.05);
+            transform: scale(1.02);
+        }
+        #continue-btn {
+            border-color: rgba(120,160,200,0.5);
+            background: linear-gradient(180deg, rgba(10,20,35,0.8), rgba(5,10,18,0.9));
+            color: #8ac;
+            display: none;
+            text-shadow: 0 0 10px rgba(100,160,200,0.3);
+        }
+        #continue-btn:hover {
+            border-color: rgba(140,180,220,0.8);
+            box-shadow: 0 0 30px rgba(100,160,200,0.2);
+            background: linear-gradient(180deg, rgba(15,28,48,0.9), rgba(8,14,25,0.95));
+        }
+        #continue-btn .cont-info {
+            font-size: 12px;
+            font-weight: normal;
+            color: #7a9ab0;
+            letter-spacing: 1px;
+        }
+        /* 职业选择芯片 */
+        .class-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 12px 0;
+        }
+        .class-chip {
+            flex: 1;
+            padding: 10px 4px;
+            background: rgba(15,10,25,0.6);
+            border: 1px solid rgba(150,130,100,0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.25s;
+            font-size: 12px;
+        }
+        .class-chip .chip-icon { font-size: 24px; display: block; margin-bottom: 3px; }
+        .class-chip .chip-name { color: #9a8a6a; font-weight: bold; font-size: 13px; }
+        .class-chip:hover { border-color: rgba(200,160,80,0.4); background: rgba(25,18,10,0.6); }
+        .class-chip.selected {
+            border-color: rgba(200,160,80,0.7);
+            background: rgba(30,20,12,0.7);
+            box-shadow: 0 0 15px rgba(200,160,80,0.15);
+        }
+        .class-chip.selected .chip-name { color: #e8c860; }
+        /* 角色名行 */
+        .name-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .name-row input {
+            flex: 1;
+            max-width: 200px;
+            padding: 10px 14px;
+            background: rgba(15,10,25,0.6);
+            border: 1px solid rgba(150,130,100,0.2);
+            border-radius: 8px;
+            color: #c8b080;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            text-align: center;
+        }
+        .name-row input:focus { border-color: rgba(200,160,80,0.5); outline: none; }
+        /* 底部操作栏 */
+        #start-bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(150,130,100,0.12);
+        }
+        #start-bottom-bar .sbb-btn {
+            background: none;
+            border: 1px solid rgba(150,130,100,0.2);
+            color: #7a6a50;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+        }
+        #start-bottom-bar .sbb-btn:hover { border-color: rgba(200,160,80,0.4); color: #c8a060; }
+        #start-version {
+            color: #4a3a2a;
+            font-size: 11px;
+        }
+        /* 头像上传 */
+        .avatar-upload {
+            position: relative;
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            border: 2px solid rgba(200,160,80,0.3);
+            overflow: hidden;
+            cursor: pointer;
+            background: rgba(15,10,25,0.6);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 8px;
+            transition: border-color 0.3s;
+        }
+        .avatar-upload:hover { border-color: rgba(220,180,100,0.6); }
+        .avatar-upload img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-upload .avatar-placeholder { color: #6a5a40; font-size: 30px; }
+        .avatar-upload input[type="file"] {
+            position: absolute; top:0; left:0;
+            width: 100%; height: 100%; opacity: 0; cursor: pointer;
+        }
+        .avatar-hint { color: #4a3a2a; font-size: 10px; margin-top: -4px; }
+        /* 成就行 */
+        .ach-row-start {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        /* 火把粒子 */
+        .torch-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            color: #fa0;
+            font-size: 12px;
+            animation: torch-drift 3s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes torch-drift {
+                    0% { transform: translateY(0) translateX(0); opacity: 0; }
+                    20% { opacity: 0.8; }
+                    50% { transform: translateY(-30px) translateX(8px); opacity: 0.4; }
+                    80% { opacity: 0.1; }
+                    100% { transform: translateY(-60px) translateX(-5px); opacity: 0; }
+                }
+
+/* ==================== 开场动画 ==================== */
+#intro-animation {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at center, #0d001a 0%, #050010 40%, #000005 100%);
+    z-index: 300;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+#intro-animation.active { display: flex; }
+#intro-animation::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, rgba(0,255,0,0.015) 0px, rgba(0,255,0,0.015) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+    z-index: 10;
+    animation: scanline-drift 8s linear infinite;
+}
+@keyframes scanline-drift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(6px); }
+}
+#intro-vignette {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+.intro-line {
+    color: #2a5;
+    font-size: 17px;
+    font-family: 'Courier New', monospace;
+    opacity: 0;
+    margin: 4px 0;
+    text-shadow: 0 0 6px rgba(0,200,80,0.4);
+    position: relative;
+    z-index: 20;
+    white-space: nowrap;
+}
+.intro-line.show {
+    opacity: 1;
+}
+.intro-line .cursor-blink {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: #0f0;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: cursor-pulse 0.7s step-end infinite;
+}
+@keyframes cursor-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.intro-title-wrap {
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.3);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin: 28px 0 14px;
+}
+.intro-title-wrap.show {
+    opacity: 1;
+    transform: scale(1);
+}
+.intro-title {
+    font-size: 46px;
+    color: #0f0;
+    font-family: 'Georgia', 'SimSun', serif;
+    letter-spacing: 8px;
+    text-shadow: 0 0 20px rgba(0,255,0,0.5), 0 0 60px rgba(0,200,0,0.3), 0 0 100px rgba(0,150,0,0.2), 0 2px 4px #000;
+    animation: title-glow 2s ease-in-out infinite;
+}
+@keyframes title-glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(0,255,0,0.5), 0 0 60px rgba(0,200,0,0.3), 0 0 100px rgba(0,150,0,0.2), 0 2px 4px #000; }
+    50% { text-shadow: 0 0 40px rgba(0,255,0,0.8), 0 0 100px rgba(0,220,0,0.5), 0 0 150px rgba(0,180,0,0.3), 0 2px 4px #000; }
+}
+.intro-subtitle {
+    font-size: 14px;
+    color: #4a8;
+    opacity: 0;
+    position: relative;
+    z-index: 20;
+    text-shadow: 0 0 4px rgba(0,180,100,0.3);
+    transition: opacity 1s ease;
+}
+.intro-subtitle.show { opacity: 0.8; }
+.intro-particles {
+    position: absolute;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+.particle {
+    position: absolute;
+    opacity: 0;
+    animation: fall-particle linear forwards;
+}
+.particle.rune  { color: #0a3; font-size: 14px; }
+.particle.ember { color: #a40; font-size: 10px; }
+.particle.skull { color: #704; font-size: 18px; }
+.particle.dust  { color: #445; font-size: 6px; }
+@keyframes fall-particle {
+    0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+    5% { opacity: var(--p-opacity, 0.5); }
+    85% { opacity: calc(var(--p-opacity, 0.5) * 0.6); }
+    100% { transform: translateY(105vh) rotate(var(--p-rotate, 360deg)); opacity: 0; }
+}
+.particle.ember {
+    animation: rise-ember linear forwards;
+}
+@keyframes rise-ember {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    10% { opacity: 0.7; }
+    100% { transform: translateY(-110vh) scale(0.1); opacity: 0; }
+}
+.intro-skip {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
+    color: #2a5;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    z-index: 20;
+    text-shadow: 0 0 8px rgba(0,200,80,0.4);
+    transition: color 0.3s, text-shadow 0.3s;
+    animation: skip-blink 2s ease-in-out infinite;
+}
+@keyframes skip-blink {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+.intro-skip:hover { color: #0f0; text-shadow: 0 0 16px rgba(0,255,0,0.8); }

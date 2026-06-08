@@ -1,0 +1,535 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 15px;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        /* ==================== 主容器：左右分栏 ==================== */
+        .game-container {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            gap: 8px;
+        }
+        
+        /* ==================== 左侧边栏 ==================== */
+                .sidebar {
+                    width: 290px;
+                    flex-shrink: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    overflow-y: auto;
+                }
+        
+        .panel {
+            background: #111;
+            border: 2px solid #0f0;
+            border-radius: 6px;
+            padding: 8px 10px;
+        }
+        
+        .panel-title {
+            color: #0f0;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 2px 0;
+                    font-size: 13px;
+                }
+        
+                .stat-label {
+                    color: #0a0;
+                }
+        
+                .stat-value {
+                    color: #fff;
+                    font-weight: bold;
+                }
+
+                /* 状态数值 2×2 紧凑网格 */
+                .stat-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 2px 8px;
+                    margin: 4px 0 4px;
+                }
+                .stat-cell {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 2px 0;
+                    font-size: 14px;
+                }
+                .stat-icon { color: #0a0; font-size: 14px; flex-shrink: 0; }
+                .stat-val { color: #fff; font-weight: bold; }
+        
+        /* HP 血条 */
+        .hp-bar-container {
+            background: #333;
+            border-radius: 3px;
+            height: 14px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+        
+.hp-bar-fill {
+            background: linear-gradient(90deg, #f00, #0f0);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        /* 血条/经验条共用文字样式 */
+        .bar-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .hp-bar-text { font-size: 10px; }
+        
+        /* EXP 经验条 */
+        .exp-bar-container {
+            background: #333;
+            border-radius: 3px;
+            height: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+        
+        .exp-bar-fill {
+            background: linear-gradient(90deg, #44f, #0ff);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        
+.exp-bar-text {
+            font-size: 9px;
+        }
+        
+        /* ==================== 右侧主区域 ==================== */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            gap: 6px;
+        }
+        
+        /* 天赋面板 (侧边栏) */
+        .talent-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            padding: 2px 0;
+        }
+        
+        .talent-badge {
+            display: inline-block;
+            background: #1a2a1a;
+            border: 1px solid #0a0;
+            border-radius: 3px;
+            padding: 1px 5px;
+            font-size: 10px;
+            color: #0f0;
+            cursor: default;
+        }
+        
+        .talent-badge.lv2 { border-color: #0ff; color: #0ff; }
+        .talent-badge.lv3 { border-color: #ff0; color: #ff0; }
+
+        .talent-item-cost {
+            display: block;
+            font-size: 10px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .talent-item.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .talent-points {
+            color: #ff0;
+            font-size: 11px;
+            text-align: center;
+            padding: 1px 0;
+        }
+        
+        .skill-btn {
+            width: 100%;
+            padding: 4px;
+            margin-top: 4px;
+            background: #1a1a2a;
+            border: 2px solid #66f;
+            border-radius: 5px;
+            color: #aaf;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        
+        .skill-btn:hover { background: #2a2a4a; border-color: #aaf; }
+        .skill-btn.ready { border-color: #0f0; color: #0f0; animation: pulse-btn 1.5s infinite; }
+        .skill-btn.active { border-color: #ff0; color: #ff0; background: #2a2a00; }
+        .skill-btn.cooldown { border-color: #666; color: #666; cursor: not-allowed; }
+        
+        /* 侧边栏角色信息 */
+        .char-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 2px 0 5px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 5px;
+        }
+        
+        .char-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #0f0;
+            object-fit: cover;
+            background: #1a1a1a;
+            flex-shrink: 0;
+        }
+        
+.char-avatar-placeholder {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #0f0;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+/* 像素画头像 8×8 网格 */
+.pxl-avatar {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 28px;
+    height: 28px;
+    gap: 0;
+}
+
+/* === 战士 - 银盔铁甲骑士 === */
+.pxl-warrior .p0{background:#1a1a1a} .pxl-warrior .p1{background:#1a1a1a} .pxl-warrior .p2{background:#1a1a1a} .pxl-warrior .p3{background:#1a1a1a} .pxl-warrior .p4{background:#222} .pxl-warrior .p5{background:#222} .pxl-warrior .p6{background:#1a1a1a} .pxl-warrior .p7{background:#1a1a1a}
+.pxl-warrior .p8{background:#1a1a1a} .pxl-warrior .p9{background:#1a1a1a} .pxl-warrior .p10{background:#222} .pxl-warrior .p11{background:#ccc} .pxl-warrior .p12{background:#ccc} .pxl-warrior .p13{background:#ccc} .pxl-warrior .p14{background:#222} .pxl-warrior .p15{background:#1a1a1a}
+.pxl-warrior .p16{background:#1a1a1a} .pxl-warrior .p17{background:#222} .pxl-warrior .p18{background:#ccc} .pxl-warrior .p19{background:#ccc} .pxl-warrior .p20{background:#ccc} .pxl-warrior .p21{background:#ccc} .pxl-warrior .p22{background:#ccc} .pxl-warrior .p23{background:#222}
+.pxl-warrior .p24{background:#222} .pxl-warrior .p25{background:#ccc} .pxl-warrior .p26{background:#fdb} .pxl-warrior .p27{background:#fdb} .pxl-warrior .p28{background:#fdb} .pxl-warrior .p29{background:#fdb} .pxl-warrior .p30{background:#ccc} .pxl-warrior .p31{background:#222}
+.pxl-warrior .p32{background:#222} .pxl-warrior .p33{background:#222} .pxl-warrior .p34{background:#fff} .pxl-warrior .p35{background:#222} .pxl-warrior .p36{background:#fff} .pxl-warrior .p37{background:#222} .pxl-warrior .p38{background:#222} .pxl-warrior .p39{background:#1a1a1a}
+.pxl-warrior .p40{background:#1a1a1a} .pxl-warrior .p41{background:#222} .pxl-warrior .p42{background:#c22} .pxl-warrior .p43{background:#c22} .pxl-warrior .p44{background:#c22} .pxl-warrior .p45{background:#c22} .pxl-warrior .p46{background:#222} .pxl-warrior .p47{background:#1a1a1a}
+.pxl-warrior .p48{background:#1a1a1a} .pxl-warrior .p49{background:#1a1a1a} .pxl-warrior .p50{background:#222} .pxl-warrior .p51{background:#c22} .pxl-warrior .p52{background:#c22} .pxl-warrior .p53{background:#222} .pxl-warrior .p54{background:#1a1a1a} .pxl-warrior .p55{background:#1a1a1a}
+.pxl-warrior .p56{background:#1a1a1a} .pxl-warrior .p57{background:#1a1a1a} .pxl-warrior .p58{background:#1a1a1a} .pxl-warrior .p59{background:#840} .pxl-warrior .p60{background:#840} .pxl-warrior .p61{background:#1a1a1a} .pxl-warrior .p62{background:#1a1a1a} .pxl-warrior .p63{background:#1a1a1a}
+
+/* === 法师 - 紫袍尖帽巫师 === */
+.pxl-mage .p0{background:#1a1a1a} .pxl-mage .p1{background:#1a1a1a} .pxl-mage .p2{background:#1a1a1a} .pxl-mage .p3{background:#96f} .pxl-mage .p4{background:#96f} .pxl-mage .p5{background:#1a1a1a} .pxl-mage .p6{background:#1a1a1a} .pxl-mage .p7{background:#1a1a1a}
+.pxl-mage .p8{background:#1a1a1a} .pxl-mage .p9{background:#1a1a1a} .pxl-mage .p10{background:#96f} .pxl-mage .p11{background:#336} .pxl-mage .p12{background:#336} .pxl-mage .p13{background:#96f} .pxl-mage .p14{background:#1a1a1a} .pxl-mage .p15{background:#1a1a1a}
+.pxl-mage .p16{background:#1a1a1a} .pxl-mage .p17{background:#96f} .pxl-mage .p18{background:#96f} .pxl-mage .p19{background:#96f} .pxl-mage .p20{background:#96f} .pxl-mage .p21{background:#96f} .pxl-mage .p22{background:#96f} .pxl-mage .p23{background:#1a1a1a}
+.pxl-mage .p24{background:#96f} .pxl-mage .p25{background:#96f} .pxl-mage .p26{background:#fdb} .pxl-mage .p27{background:#fdb} .pxl-mage .p28{background:#fdb} .pxl-mage .p29{background:#fdb} .pxl-mage .p30{background:#96f} .pxl-mage .p31{background:#96f}
+.pxl-mage .p32{background:#96f} .pxl-mage .p33{background:#fdb} .pxl-mage .p34{background:#0ff} .pxl-mage .p35{background:#fdb} .pxl-mage .p36{background:#0ff} .pxl-mage .p37{background:#fdb} .pxl-mage .p38{background:#96f} .pxl-mage .p39{background:#1a1a1a}
+.pxl-mage .p40{background:#1a1a1a} .pxl-mage .p41{background:#96f} .pxl-mage .p42{background:#fdb} .pxl-mage .p43{background:#fdb} .pxl-mage .p44{background:#fdb} .pxl-mage .p45{background:#fdb} .pxl-mage .p46{background:#96f} .pxl-mage .p47{background:#1a1a1a}
+.pxl-mage .p48{background:#1a1a1a} .pxl-mage .p49{background:#1a1a1a} .pxl-mage .p50{background:#96f} .pxl-mage .p51{background:#96f} .pxl-mage .p52{background:#96f} .pxl-mage .p53{background:#96f} .pxl-mage .p54{background:#1a1a1a} .pxl-mage .p55{background:#1a1a1a}
+.pxl-mage .p56{background:#1a1a1a} .pxl-mage .p57{background:#1a1a1a} .pxl-mage .p58{background:#1a1a1a} .pxl-mage .p59{background:#222} .pxl-mage .p60{background:#222} .pxl-mage .p61{background:#1a1a1a} .pxl-mage .p62{background:#1a1a1a} .pxl-mage .p63{background:#1a1a1a}
+
+/* === 盗贼 - 兜帽暗影刺客 === */
+.pxl-rogue .p0{background:#1a1a1a} .pxl-rogue .p1{background:#1a1a1a} .pxl-rogue .p2{background:#1a1a1a} .pxl-rogue .p3{background:#1a1a1a} .pxl-rogue .p4{background:#1a1a1a} .pxl-rogue .p5{background:#1a1a1a} .pxl-rogue .p6{background:#1a1a1a} .pxl-rogue .p7{background:#1a1a1a}
+.pxl-rogue .p8{background:#1a1a1a} .pxl-rogue .p9{background:#1a1a1a} .pxl-rogue .p10{background:#333} .pxl-rogue .p11{background:#333} .pxl-rogue .p12{background:#333} .pxl-rogue .p13{background:#333} .pxl-rogue .p14{background:#1a1a1a} .pxl-rogue .p15{background:#1a1a1a}
+.pxl-rogue .p16{background:#1a1a1a} .pxl-rogue .p17{background:#333} .pxl-rogue .p18{background:#333} .pxl-rogue .p19{background:#333} .pxl-rogue .p20{background:#333} .pxl-rogue .p21{background:#333} .pxl-rogue .p22{background:#333} .pxl-rogue .p23{background:#1a1a1a}
+.pxl-rogue .p24{background:#333} .pxl-rogue .p25{background:#333} .pxl-rogue .p26{background:#fdb} .pxl-rogue .p27{background:#fdb} .pxl-rogue .p28{background:#fdb} .pxl-rogue .p29{background:#fdb} .pxl-rogue .p30{background:#333} .pxl-rogue .p31{background:#1a1a1a}
+.pxl-rogue .p32{background:#333} .pxl-rogue .p33{background:#fdb} .pxl-rogue .p34{background:#a00} .pxl-rogue .p35{background:#1a1a1a} .pxl-rogue .p36{background:#a00} .pxl-rogue .p37{background:#fdb} .pxl-rogue .p38{background:#333} .pxl-rogue .p39{background:#1a1a1a}
+.pxl-rogue .p40{background:#1a1a1a} .pxl-rogue .p41{background:#222} .pxl-rogue .p42{background:#222} .pxl-rogue .p43{background:#222} .pxl-rogue .p44{background:#222} .pxl-rogue .p45{background:#222} .pxl-rogue .p46{background:#1a1a1a} .pxl-rogue .p47{background:#1a1a1a}
+.pxl-rogue .p48{background:#1a1a1a} .pxl-rogue .p49{background:#1a1a1a} .pxl-rogue .p50{background:#222} .pxl-rogue .p51{background:#333} .pxl-rogue .p52{background:#222} .pxl-rogue .p53{background:#1a1a1a} .pxl-rogue .p54{background:#1a1a1a} .pxl-rogue .p55{background:#1a1a1a}
+.pxl-rogue .p56{background:#1a1a1a} .pxl-rogue .p57{background:#1a1a1a} .pxl-rogue .p58{background:#1a1a1a} .pxl-rogue .p59{background:#222} .pxl-rogue .p60{background:#1a1a1a} .pxl-rogue .p61{background:#1a1a1a} .pxl-rogue .p62{background:#1a1a1a} .pxl-rogue .p63{background:#1a1a1a}
+
+.pxl-avatar .px {
+    width: 100%;
+    height: 100%;
+}
+
+/* === 内联UI图标（CSS绘制 + Unicode） === */
+.ico-sword::before { content:'🗡️'; }
+.ico-shield::before { content:'🛡️'; }
+.ico-helm::before { content:'⛑️'; }
+.ico-chest::before { content:'🦺'; }
+.ico-gloves::before { content:'🧤'; }
+.ico-boots::before { content:'👢'; }
+.ico-ring::before { content:'💍'; }
+.ico-neck::before { content:'📿'; }
+.ico-potion::before { content:'🧪'; }
+.ico-healer::before { content:'💚'; }
+.ico-merchant::before { content:'🏪'; }
+.ico-sage::before { content:'📜'; }
+.ico-portal::before { content:'🌀'; }
+/* 状态效果图标 */
+.ico-effect { display:inline-block; width:18px; height:18px; border-radius:3px; text-align:center; line-height:18px; font-size:12px; margin-right:2px; }
+.ico-poison { background:#3a3; color:#0f0; }
+.ico-bleed { background:#600; color:#f00; }
+.ico-burn { background:#630; color:#f90; }
+.ico-freeze { background:#036; color:#6cf; }
+.ico-stun { background:#660; color:#ff0; }
+.ico-weak { background:#606; color:#f6f; }
+
+/* === 牧师 - 白袍金环神官 === */
+.pxl-priest .p0{background:#fc6} .pxl-priest .p1{background:#1a1a1a} .pxl-priest .p2{background:#1a1a1a} .pxl-priest .p3{background:#1a1a1a} .pxl-priest .p4{background:#1a1a1a} .pxl-priest .p5{background:#1a1a1a} .pxl-priest .p6{background:#1a1a1a} .pxl-priest .p7{background:#fc6}
+.pxl-priest .p8{background:#1a1a1a} .pxl-priest .p9{background:#1a1a1a} .pxl-priest .p10{background:#fff} .pxl-priest .p11{background:#fff} .pxl-priest .p12{background:#fff} .pxl-priest .p13{background:#fff} .pxl-priest .p14{background:#1a1a1a} .pxl-priest .p15{background:#1a1a1a}
+.pxl-priest .p16{background:#1a1a1a} .pxl-priest .p17{background:#fff} .pxl-priest .p18{background:#fff} .pxl-priest .p19{background:#fff} .pxl-priest .p20{background:#fff} .pxl-priest .p21{background:#fff} .pxl-priest .p22{background:#fff} .pxl-priest .p23{background:#1a1a1a}
+.pxl-priest .p24{background:#fff} .pxl-priest .p25{background:#fff} .pxl-priest .p26{background:#fdb} .pxl-priest .p27{background:#fdb} .pxl-priest .p28{background:#fdb} .pxl-priest .p29{background:#fdb} .pxl-priest .p30{background:#fff} .pxl-priest .p31{background:#fff}
+.pxl-priest .p32{background:#fff} .pxl-priest .p33{background:#fdb} .pxl-priest .p34{background:#6cf} .pxl-priest .p35{background:#1a1a1a} .pxl-priest .p36{background:#6cf} .pxl-priest .p37{background:#fdb} .pxl-priest .p38{background:#fff} .pxl-priest .p39{background:#1a1a1a}
+.pxl-priest .p40{background:#1a1a1a} .pxl-priest .p41{background:#fff} .pxl-priest .p42{background:#fff} .pxl-priest .p43{background:#fff} .pxl-priest .p44{background:#fff} .pxl-priest .p45{background:#fff} .pxl-priest .p46{background:#fff} .pxl-priest .p47{background:#1a1a1a}
+.pxl-priest .p48{background:#1a1a1a} .pxl-priest .p49{background:#1a1a1a} .pxl-priest .p50{background:#fff} .pxl-priest .p51{background:#fff} .pxl-priest .p52{background:#fff} .pxl-priest .p53{background:#fff} .pxl-priest .p54{background:#1a1a1a} .pxl-priest .p55{background:#1a1a1a}
+.pxl-priest .p56{background:#1a1a1a} .pxl-priest .p57{background:#1a1a1a} .pxl-priest .p58{background:#1a1a1a} .pxl-priest .p59{background:#c6f} .pxl-priest .p60{background:#c6f} .pxl-priest .p61{background:#1a1a1a} .pxl-priest .p62{background:#1a1a1a} .pxl-priest .p63{background:#1a1a1a}
+        .pxl-priest .p24{background:#1a1a1a} .pxl-priest .p25{background:#fff} .pxl-priest .p26{background:#f99} .pxl-priest .p27{background:#f99} .pxl-priest .p28{background:#fff} .pxl-priest .p29{background:#1a1a1a}
+        .pxl-priest .p30{background:#1a1a1a} .pxl-priest .p31{background:#1a1a1a} .pxl-priest .p32{background:#fff} .pxl-priest .p33{background:#fff} .pxl-priest .p34{background:#1a1a1a} .pxl-priest .p35{background:#1a1a1a}
+        
+        .char-name {
+            color: #0ff;
+            font-size: 14px;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
+        .char-name-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .char-class-inline {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0f0;
+            border-radius: 4px;
+        }
+        
+        /* ==================== 音效开关按钮 ==================== */
+        #sfx-toggle {
+            position: fixed;
+            top: 12px;
+            right: 16px;
+            z-index: 250;
+            background: #111;
+            border: 2px solid #0f0;
+            border-radius: 8px;
+            color: #0f0;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-family: sans-serif;
+        }
+        
+        #sfx-toggle:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 12px rgba(0, 255, 0, 0.5);
+        }
+        
+        #sfx-toggle.muted {
+            border-color: #f00;
+            color: #f00;
+        }
+        
+        #sfx-toggle.muted:hover {
+                    background: #f00;
+                    color: #000;
+                    box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+                }
+        
+                /* 自动攻击开关按钮 */
+                #auto-attack-toggle {
+                    position: fixed;
+                    top: 58px;
+                    right: 16px;
+                    z-index: 250;
+                    background: #111;
+                    border: 2px solid #fa0;
+                    border-radius: 8px;
+                    color: #fa0;
+                    font-size: 20px;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s;
+                    font-family: sans-serif;
+                }
+                #auto-attack-toggle:hover {
+                    background: #fa0;
+                    color: #000;
+                    box-shadow: 0 0 12px rgba(255, 170, 0, 0.5);
+                }
+                #auto-attack-toggle.off {
+                    border-color: #888;
+                    color: #888;
+                }
+                #auto-attack-toggle.off:hover {
+                    background: #888;
+                    color: #000;
+                    box-shadow: 0 0 12px rgba(136, 136, 136, 0.5);
+                }
+
+                /* 设置按钮 (v3.43.1) */
+                #settings-toggle {
+                    position: fixed;
+                    top: 102px;
+                    right: 16px;
+                    z-index: 250;
+                    background: #111;
+                    border: 2px solid #0ff;
+                    border-radius: 8px;
+                    color: #0ff;
+                    font-size: 20px;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s;
+                    font-family: sans-serif;
+                }
+                #settings-toggle:hover {
+                    background: #0ff;
+                    color: #000;
+                    box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+                }
+
+        /* [BGM 已禁用 - 保留备份]
+                #bgm-toggle {
+                    position: fixed;
+                    top: 58px;
+                    right: 16px;
+                    z-index: 250;
+                    background: #111;
+                    border: 2px solid #0f0;
+                    border-radius: 8px;
+                    color: #0f0;
+                    font-size: 20px;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s;
+                    font-family: sans-serif;
+                }
+        
+                #bgm-toggle:hover {
+                    background: #0f0;
+                    color: #000;
+                    box-shadow: 0 0 12px rgba(0, 255, 0, 0.5);
+                }
+        
+                #bgm-toggle.muted {
+                    border-color: #f00;
+                    color: #f00;
+                }
+        
+                #bgm-toggle.muted:hover {
+                                    background: #f00;
+                                    color: #000;
+                                    box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+                                }
+                        */
+
+                        /* ==================== 药水背包栏 (v3.26.0) ==================== */
+                        .potion-belt {
+                            display: flex;
+                            gap: 4px;
+                            justify-content: center;
+                        }
+                        .potion-slot {
+                            flex: 1;
+                            aspect-ratio: 1;
+                            max-width: 56px;
+                            background: #0a0a0a;
+                            border: 2px solid #333;
+                            border-radius: 8px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            position: relative;
+                            transition: all 0.2s;
+                        }
+                        .potion-slot:hover {
+                            border-color: #0f0;
+                            background: #0a1a0a;
+                            box-shadow: 0 0 8px rgba(0,255,0,0.3);
+                        }
+                        .potion-slot.has-potion {
+                            border-color: #ffd700;
+                            background: #1a1a0a;
+                        }
+                        .potion-slot.has-potion:hover {
+                            box-shadow: 0 0 12px rgba(255,215,0,0.5);
+                        }
+                        .pb-key {
+                            position: absolute;
+                            top: 2px;
+                            right: 4px;
+                            font-size: 9px;
+                            color: #666;
+                            font-weight: bold;
+                        }
+                        .pb-icon {
+                            font-size: 20px;
+                            line-height: 1;
+                        }

@@ -1,0 +1,41 @@
+/* ==================== 响应式：小屏幕 ==================== */
+        @media (max-width: 900px) {
+            .game-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+                overflow-y: visible;
+            }
+            
+            .sidebar .panel {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            #map-display {
+                font-size: 18px;
+            }
+            
+            #log-container {
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+                    body {
+                        padding: 5px 8px;
+                    }
+            
+                    .sidebar .panel {
+                        min-width: 100%;
+                    }
+            
+                    #map-display {
+                        font-size: 15px;
+                    }
+                }

@@ -1,0 +1,28 @@
+/* 底部日志区 */
+        #log-container {
+            background: #111;
+            border: 2px solid #0f0;
+            border-radius: 6px;
+            padding: 10px 15px;
+            height: 160px;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        
+        #game-log {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .log-entry {
+            margin-bottom: 4px;
+        }
+        
+        .log-combat { color: #f55; }
+        .log-gain { color: #5f5; }
+        .log-item { color: #f5f; }
+        .log-system { color: #ff5; }
+        .log-danger { color: #f00; }
+        .log-poison { color: #a5f; }
+        .log-bleed { color: #f55; }

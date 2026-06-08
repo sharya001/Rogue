@@ -1,0 +1,142 @@
+/* ==================== 排行榜 ==================== */
+                #leaderboard-modal {
+                    display: none;
+                    position: fixed;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.92);
+                    z-index: 4000;
+                    align-items: center;
+                    justify-content: center;
+                }
+                #lb-inner {
+                    background: #111;
+                    border: 3px solid #ffd700;
+                    border-radius: 12px;
+                    padding: 20px;
+                    max-width: 620px;
+                    width: 92%;
+                    max-height: 85vh;
+                    overflow-y: auto;
+                }
+                #lb-inner h2 {
+                    color: #ffd700;
+                    text-align: center;
+                    font-size: 22px;
+                    margin-bottom: 4px;
+                }
+                #lb-subtitle {
+                    text-align: center;
+                    color: #888;
+                    font-size: 12px;
+                    margin-bottom: 14px;
+                }
+                #lb-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 14px;
+                }
+                #lb-table th {
+                    color: #ffd700;
+                    border-bottom: 2px solid #ffd700;
+                    padding: 6px 4px;
+                    text-align: left;
+                    font-size: 12px;
+                }
+                #lb-table td {
+                    padding: 5px 4px;
+                    border-bottom: 1px solid #333;
+                    color: #ccc;
+                }
+                #lb-table .lb-rank-1 { color: #ffd700; font-weight: bold; }
+                #lb-table .lb-rank-2 { color: #c0c0c0; font-weight: bold; }
+                #lb-table .lb-rank-3 { color: #cd7f32; font-weight: bold; }
+                #lb-table tr.lb-current { background: rgba(255,215,0,0.15); }
+                #lb-table tr.lb-current td { color: #ffd700; font-weight: bold; }
+                .lb-empty {
+                    text-align: center;
+                    color: #666;
+                    padding: 40px 0;
+                    font-size: 16px;
+                }
+                .lb-btn {
+                    background: linear-gradient(135deg, #3a2a0a, #5a4a1a);
+                    border: 2px solid #ffd700;
+                    color: #ffd700;
+                    padding: 10px 28px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 15px;
+                    font-weight: bold;
+                    transition: all 0.2s;
+                }
+                .lb-btn:hover {
+                    background: linear-gradient(135deg, #5a4a1a, #8a6a2a);
+                    box-shadow: 0 0 12px rgba(255,215,0,0.4);
+                }
+                .lb-btn-sm {
+                    padding: 5px 14px;
+                    font-size: 13px;
+                    border-radius: 6px;
+                }
+                #lb-close-btn {
+                    display: block;
+                    margin: 14px auto 0;
+                    padding: 8px 30px;
+                    background: #333;
+                    border: 2px solid #888;
+                    color: #ccc;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+                #lb-close-btn:hover { border-color: #ffd700; color: #ffd700; }
+                #final-score {
+                    color: #ffd700;
+                    font-size: 20px;
+                    font-weight: bold;
+                    display: block;
+                    margin: 8px 0;
+                }
+                #final-score-detail {
+                    color: #888;
+                    font-size: 13px;
+                }
+
+/* ==================== 统计面板 ==================== */
+#stats-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+}
+#stats-inner {
+    background: #0a0a1e;
+    border: 2px solid #48a;
+    border-radius: 12px;
+    padding: 24px 32px;
+    max-width: 360px;
+    width: 90%;
+    color: #ccc;
+    text-align: center;
+}
+#stats-inner h2 { color: #6af; margin: 0 0 16px; font-size: 22px; }
+#stats-content { text-align: left; font-size: 15px; line-height: 2; padding: 12px 0; }
+#stats-content .stat-row { display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px solid #1a1a3a; }
+#stats-content .stat-label { color: #8af; }
+#stats-content .stat-value { color: #eef; font-weight: bold; }
+#stats-close-btn {
+    margin-top: 12px;
+    padding: 8px 24px;
+    background: #1a1a3a;
+    border: 1px solid #48a;
+    border-radius: 6px;
+    color: #8af;
+    font-size: 14px;
+    cursor: pointer;
+}
+#stats-close-btn:hover { background: #2a2a5a; }

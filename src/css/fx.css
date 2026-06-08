@@ -1,0 +1,168 @@
+/* 战斗特效 */
+        .battle-fx {
+            position: absolute;
+            pointer-events: none;
+            z-index: 50;
+            transition: left 0.28s ease-out, top 0.28s ease-out;
+        }
+        
+        /* 🔥 火球 */
+        .fx-fireball {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, #ff0 30%, #f80 60%, #f00 100%);
+            box-shadow: 0 0 10px #f80, 0 0 20px #f00, 0 0 30px #f80;
+        }
+        .fx-fireball-trail {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: radial-gradient(circle, #ff0 0%, #f80 50%, transparent 100%);
+            box-shadow: 0 0 6px #f80; pointer-events: none; z-index: 49;
+            animation: trail-fade 0.35s forwards;
+        }
+        .fx-fireball-hit {
+            position: absolute; width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, #ff0 30%, #f80 60%, transparent 100%);
+            box-shadow: 0 0 20px #ff0, 0 0 40px #f80; pointer-events: none; z-index: 51;
+            animation: spark-burst 0.35s forwards;
+        }
+        
+        /* ⚡ 闪电 */
+        .fx-lightning {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, #8ef 40%, #48f 100%);
+            box-shadow: 0 0 12px #48f, 0 0 24px #8ef, 0 0 40px #48f;
+            animation: lightning-flicker 0.08s infinite alternate;
+        }
+        @keyframes lightning-flicker {
+            0% { opacity: 1; transform: scale(1) rotate(0deg); }
+            100% { opacity: 0.7; transform: scale(1.3) rotate(15deg); }
+        }
+        .fx-lightning-bolt {
+            position: absolute; pointer-events: none; z-index: 49;
+            width: 3px; background: #8ef;
+            box-shadow: 0 0 6px #48f, 0 0 12px #8ef;
+            animation: bolt-fade 0.3s forwards;
+        }
+        @keyframes bolt-fade {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .fx-lightning-hit {
+            position: absolute; width: 50px; height: 50px; border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, #8ef 40%, transparent 100%);
+            box-shadow: 0 0 30px #48f, 0 0 50px #8ef; pointer-events: none; z-index: 51;
+            animation: spark-burst 0.3s forwards;
+        }
+        
+        /* 🌪️ 飓风 */
+        .fx-hurricane {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 3px solid #4f8;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            box-shadow: 0 0 10px #4f8, inset 0 0 8px #4f8;
+            animation: hurricane-spin 0.15s linear infinite;
+        }
+        @keyframes hurricane-spin {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .fx-hurricane-trail {
+            position: absolute; width: 18px; height: 18px; border-radius: 50%;
+            border: 2px solid #4f8; border-top-color: transparent;
+            box-shadow: 0 0 6px #4f8; pointer-events: none; z-index: 49;
+            animation: hurricane-trail-fade 0.4s forwards;
+        }
+        @keyframes hurricane-trail-fade {
+            0% { opacity: 0.6; transform: rotate(0deg) scale(1); }
+            100% { opacity: 0; transform: rotate(360deg) scale(0.2); }
+        }
+        .fx-hurricane-hit {
+            position: absolute; width: 50px; height: 50px; border-radius: 50%;
+            border: 3px solid #4f8;
+            box-shadow: 0 0 20px #4f8, inset 0 0 15px #4f8;
+            pointer-events: none; z-index: 51;
+            animation: hurricane-hit 0.4s forwards;
+        }
+        @keyframes hurricane-hit {
+            0% { opacity: 1; transform: scale(0.5) rotate(0deg); }
+            100% { opacity: 0; transform: scale(2) rotate(720deg); }
+        }
+        
+        /* 🗡️ 刀剑 */
+        .fx-sword {
+            width: 30px; height: 6px; border-radius: 2px;
+            background: linear-gradient(90deg, #ccc 0%, #fff 50%, #eef 100%);
+            box-shadow: 0 0 8px #aaf, 0 0 16px #88f;
+            transform-origin: center center;
+        }
+        .fx-sword-trail {
+            position: absolute; pointer-events: none; z-index: 49;
+            width: 20px; height: 3px; border-radius: 1px;
+            background: linear-gradient(90deg, transparent, #aaf);
+            box-shadow: 0 0 4px #88f;
+            animation: sword-trail-fade 0.3s forwards;
+        }
+        @keyframes sword-trail-fade {
+            0% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+        .fx-sword-hit {
+            position: absolute; pointer-events: none; z-index: 51;
+            width: 40px; height: 40px;
+            animation: sword-slash 0.3s forwards;
+        }
+        @keyframes sword-slash {
+            0% { opacity: 1; transform: rotate(-45deg) scaleX(0.5); }
+            50% { opacity: 1; transform: rotate(45deg) scaleX(1.5); }
+            100% { opacity: 0; transform: rotate(45deg) scaleX(2); }
+        }
+        .fx-sword-hit::before {
+            content: ''; position: absolute; width: 100%; height: 3px; top: 50%;
+            background: linear-gradient(90deg, transparent, #fff, #aaf, transparent);
+            box-shadow: 0 0 10px #88f;
+        }
+        .fx-sword-hit::after {
+            content: ''; position: absolute; width: 3px; height: 100%; left: 50%;
+            background: linear-gradient(180deg, transparent, #fff, #aaf, transparent);
+            box-shadow: 0 0 10px #88f;
+        }
+        
+        /* 👊 铁拳 */
+        .fx-fist {
+            width: 28px; height: 28px; font-size: 24px;
+            display: flex; align-items: center; justify-content: center;
+            filter: drop-shadow(0 0 8px #fa0) drop-shadow(0 0 16px #f80);
+            animation: fist-pump 0.15s ease-in-out infinite alternate;
+        }
+        @keyframes fist-pump {
+            0% { transform: scale(1) rotate(-5deg); }
+            100% { transform: scale(1.15) rotate(5deg); }
+        }
+        .fx-fist-trail {
+            position: absolute; pointer-events: none; z-index: 49;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: radial-gradient(circle, #fa0 0%, #f80 50%, transparent 100%);
+            box-shadow: 0 0 6px #fa0;
+            animation: trail-fade 0.3s forwards;
+        }
+        .fx-fist-hit {
+            position: absolute; pointer-events: none; z-index: 51;
+            font-size: 36px;
+            animation: fist-impact 0.35s forwards;
+        }
+        @keyframes fist-impact {
+            0% { opacity: 1; transform: scale(0.5); }
+            40% { opacity: 1; transform: scale(1.8); }
+            100% { opacity: 0; transform: scale(2.2); }
+        }
+        
+        /* 通用 */
+        @keyframes trail-fade {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.3); }
+        }
+        @keyframes spark-burst {
+            0% { opacity: 1; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(2); }
+        }

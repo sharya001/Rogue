@@ -1,0 +1,117 @@
+/* 主视窗 - 迷宫地图 */
+#game-view {
+    background: #0a0a0a;
+    border: 2px solid #0f0;
+    border-radius: 6px;
+    padding: 15px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#map-display {
+    font-family: 'Courier New', monospace;
+    font-size: 28px;
+    line-height: 1.2;
+    white-space: pre;
+    color: #0f0;
+    text-align: center;
+    transform-origin: center center;
+}
+
+/* 移动微震 */
+#map-display.shake-u { animation: shake-u 0.15s ease-out; }
+#map-display.shake-d { animation: shake-d 0.15s ease-out; }
+#map-display.shake-l { animation: shake-l 0.15s ease-out; }
+#map-display.shake-r { animation: shake-r 0.15s ease-out; }
+@keyframes shake-u { 0% { transform:translateY(0); } 50% { transform:translateY(-3px); } 100% { transform:translateY(0); } }
+@keyframes shake-d { 0% { transform:translateY(0); } 50% { transform:translateY(3px); } 100% { transform:translateY(0); } }
+@keyframes shake-l { 0% { transform:translateX(0); } 50% { transform:translateX(-3px); } 100% { transform:translateX(0); } }
+@keyframes shake-r { 0% { transform:translateX(0); } 50% { transform:translateX(3px); } 100% { transform:translateX(0); } }
+
+#map-display span {
+    display: inline-block;
+    width: 1.3em;
+    text-align: center;
+}
+
+/* 实体颜色 */
+.player { color: #0ff; }
+.player.stepping { animation: step-pulse 0.3s ease-out; }
+@keyframes step-pulse {
+    0% { transform:scale(0.7); filter:brightness(2.5); }
+    50% { transform:scale(1.3); filter:brightness(1.5); }
+    100% { transform:scale(1); filter:brightness(1); }
+}
+
+/* 足迹粒子 */
+.footstep-particle {
+    position: absolute;
+    pointer-events: none;
+    z-index: 50;
+    color: #0ff;
+    font-size: 10px;
+    animation: footstep-fade 0.4s ease-out forwards;
+}
+@keyframes footstep-fade {
+    0% { opacity: 0.8; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--fx), var(--fy)) scale(0.3); }
+}
+
+.enemy { color: #f66; animation: enemy-glow 0.6s infinite alternate; }
+.elite { color: #fa0; font-size: 1.5em; text-shadow: 0 0 8px #fa0, 0 0 20px #f80; animation: elite-pulse 1.2s ease-in-out infinite; }
+@keyframes elite-pulse {
+    0%,100% { opacity:0.85; transform:scale(1); text-shadow:0 0 6px #fa0, 0 0 16px #f80; }
+    50% { opacity:1; transform:scale(1.2); text-shadow:0 0 12px #fa0, 0 0 28px #f80, 0 0 40px #f60; }
+}
+.boss { color: #f00; font-size: 1.7em; animation: boss-pulse 1s ease-in-out infinite; }
+.rare-monster { color: #0ff; font-size: 1.5em; animation: rare-sparkle 0.5s ease-in-out infinite; text-shadow: 0 0 8px #0ff, 0 0 16px #f0f; }
+@keyframes rare-sparkle {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.15); }
+}
+.potion { color: #f0f; }
+.shop-npc { color: #ffa500; cursor: pointer; font-size: 1.5em; }
+.chest { color: #fa0; }
+.exit { color: #0ff; font-size: 1.5em; text-shadow: 0 0 6px #0ff, 0 0 14px #0ff, 0 0 24px #0aa; animation: portal-glow 2s ease-in-out infinite; }
+@keyframes portal-glow {
+    0%, 100% { text-shadow: 0 0 4px #0ff, 0 0 10px #0ff, 0 0 18px #0aa; transform: scale(1); }
+    50% { text-shadow: 0 0 10px #0ff, 0 0 22px #0ff, 0 0 36px #0cc; transform: scale(1.15); }
+}
+.wall { color: #666; }
+.floor { color: #333; opacity: 0.2; }
+.dark-fog { color: #111 !important; opacity: 0.15; }
+.deco { text-shadow: 0 0 4px currentColor; }
+
+/* 精灵模式 */
+.sprite-cell {
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    color: transparent !important;
+    text-shadow: none !important;
+    image-rendering: pixelated;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0 !important;
+    display: inline-block !important;
+}
+.sprite-player { image-rendering: pixelated; }
+.sprite-boss { image-rendering: pixelated; }
+
+@keyframes boss-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes enemy-glow {
+    0%   { text-shadow: 0 0 3px #f00, 0 0 6px #900; }
+    25%  { text-shadow: 0 0 8px #f33, 0 0 16px #f00, 0 0 24px #c00; }
+    50%  { text-shadow: 0 0 2px #f00; }
+    75%  { text-shadow: 0 0 10px #f22, 0 0 20px #f00, 0 0 30px #a00; }
+    100% { text-shadow: 0 0 4px #f00, 0 0 8px #b00; }
+}

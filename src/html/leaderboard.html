@@ -1,0 +1,83 @@
+<div id="leaderboard-modal">
+    <div id="lb-inner">
+        <h2>🏆 深渊排行榜</h2>
+        <div id="lb-subtitle">本地排行 · 前 100 名</div>
+        <div id="lb-content"></div>
+        <button id="lb-close-btn" onclick="closeLeaderboard()">关闭 [ESC]</button>
+    </div>
+</div>
+
+<!-- 工匠工坊弹窗 -->
+<div id="workshop-modal">
+    <div id="ws-inner">
+        <h2>⚒️ 工匠工坊</h2>
+        <div id="ws-points">🔨 工匠点数: <span id="ws-pts">0</span></div>
+        <div id="ws-upgrade-list"></div>
+        <button id="ws-close-btn" onclick="closeWorkshop()">关闭 [ESC]</button>
+        <button id="ws-reset-btn" onclick="resetWorkshop()" style="display:block;margin:8px auto 0;padding:6px 20px;background:none;border:1px solid #600;color:#a44;border-radius:6px;cursor:pointer;font-size:12px;">🔄 重置全部 (返还点数)</button>
+            </div>
+        </div>
+
+        <!-- 键位说明弹窗 -->
+<div id="keyhelp-modal">
+            <div id="kh-inner">
+                <h2>⌨️ 键位说明</h2>
+                <div class="kh-section-title">🎮 操作</div>
+                <div class="kh-grid">
+                    <div class="kh-item"><span class="kh-key">↑↓←→ / WASD</span><span class="kh-desc">移动角色</span></div>
+                    <div class="kh-item"><span class="kh-key">C</span><span class="kh-desc">角色属性面板</span></div>
+                    <div class="kh-item"><span class="kh-key">Tab</span><span class="kh-desc">装备详情</span></div>
+                    <div class="kh-item"><span class="kh-key">T</span><span class="kh-desc">天赋面板</span></div>
+                    <div class="kh-item"><span class="kh-key">Q</span><span class="kh-desc">主动技能</span></div>
+                    <div class="kh-item"><span class="kh-key">P</span><span class="kh-desc">成就面板</span></div>
+                    <div class="kh-item"><span class="kh-key">V</span><span class="kh-desc">冒险统计</span></div>
+                    <div class="kh-item"><span class="kh-key">H / ?</span><span class="kh-desc">按键帮助</span></div>
+                    <div class="kh-item"><span class="kh-key">ESC</span><span class="kh-desc">关闭弹窗 / 返回</span></div>
+                    <div class="kh-item"><span class="kh-key">`</span><span class="kh-desc">精灵/文字模式</span></div>
+                </div>
+                <div class="kh-section-title">🧪 药水</div>
+                <div class="kh-grid">
+                    <div class="kh-item"><span class="kh-key">1 / 2 / 3 / 4</span><span class="kh-desc">使用背包药水</span></div>
+                    <div class="kh-item"><span class="kh-key">D → 喝 / B → 存 / X → 丢</span><span class="kh-desc">拾取药水时</span></div>
+                </div>
+                <div class="kh-section-title">🎯 弹窗快捷</div>
+                <div class="kh-grid">
+                    <div class="kh-item"><span class="kh-key">1/2/3/4</span><span class="kh-desc">开始界面选职业</span></div>
+                    <div class="kh-item"><span class="kh-key">Enter</span><span class="kh-desc">开始游戏 / 确认</span></div>
+                    <div class="kh-item"><span class="kh-key">Y / N</span><span class="kh-desc">装备对比 替换/放弃</span></div>
+                    <div class="kh-item"><span class="kh-key">1 / 2 / 3</span><span class="kh-desc">升级/许愿井 选择</span></div>
+                    <div class="kh-item"><span class="kh-key">1~9</span><span class="kh-desc">商店购买</span></div>
+                    <div class="kh-item"><span class="kh-key">数字键</span><span class="kh-desc">天赋/祭坛/图书馆/工坊</span></div>
+                </div>
+                <div class="kh-section-title">🔧 调试</div>
+                <div class="kh-grid">
+                    <div class="kh-item"><span class="kh-key">0</span><span class="kh-desc">无敌模式</span></div>
+                    <div class="kh-item"><span class="kh-key">5</span><span class="kh-desc">一击秒杀</span></div>
+                    <div class="kh-item"><span class="kh-key">9</span><span class="kh-desc">跳Boss层</span></div>
+                    <div class="kh-item"><span class="kh-key">8</span><span class="kh-desc">跳商店层</span></div>
+                    <div class="kh-item"><span class="kh-key">7</span><span class="kh-desc">+500金币</span></div>
+                    <div class="kh-item"><span class="kh-key">6</span><span class="kh-desc">满血恢复</span></div>
+                    <div class="kh-item"><span class="kh-key">空格</span><span class="kh-desc">跳下一层</span></div>
+                </div>
+                <button id="kh-close-btn" onclick="closeKeyHelp()">关闭 [ESC]</button>
+            </div>
+        </div>
+
+                <!-- 传奇图鉴弹窗 -->
+                <div id="codex-modal">
+                    <div id="cx-inner">
+                        <h2>📖 传奇图鉴</h2>
+                        <div id="cx-subtitle">收集进度: <span id="cx-progress">0/12</span></div>
+                        <div id="cx-grid"></div>
+<button id="cx-close-btn" onclick="closeCodex()">关闭 [ESC]</button>
+            </div>
+        </div>
+
+        <!-- 统计面板弹窗 -->
+        <div id="stats-modal">
+            <div id="stats-inner">
+                <h2>📊 冒险统计</h2>
+                <div id="stats-content"></div>
+                <button id="stats-close-btn" onclick="closeStats()">关闭 [ESC]</button>
+            </div>
+        </div>

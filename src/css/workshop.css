@@ -1,0 +1,205 @@
+/* ==================== 工匠工坊 ==================== */
+        #workshop-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.93);
+            z-index: 4100;
+            align-items: center;
+            justify-content: center;
+        }
+        #ws-inner {
+            background: linear-gradient(180deg, #1a1208, #0d0804);
+            border: 2px solid #8a6a30;
+            border-radius: 16px;
+            padding: 24px 30px;
+            width: 680px;
+            max-width: 94%;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 40px rgba(150,100,30,0.2);
+        }
+        #ws-inner h2 {
+            color: #d4a040;
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+        }
+        #ws-points {
+            text-align: center;
+            color: #d4a040;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 14px;
+            padding: 6px;
+            background: rgba(200,150,50,0.08);
+            border-radius: 8px;
+        }
+        #ws-upgrade-list {
+            flex: 1;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding-right: 4px;
+        }
+        .ws-card {
+            background: rgba(20,15,8,0.7);
+            border: 1px solid rgba(140,100,40,0.2);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+        .ws-card:hover { border-color: rgba(200,150,60,0.5); }
+        .ws-card.maxed { opacity: 0.5; border-color: rgba(100,80,40,0.15); }
+        .ws-icon { font-size: 28px; flex-shrink: 0; }
+        .ws-info { flex: 1; min-width: 0; }
+        .ws-name { color: #d4a040; font-size: 14px; font-weight: bold; }
+        .ws-desc { color: #8a6a40; font-size: 11px; }
+        .ws-lvl { color: #6a5a30; font-size: 11px; }
+        .ws-buy-btn {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #8a6a30;
+            background: rgba(140,100,40,0.15);
+            color: #d4a040;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+        }
+        .ws-buy-btn:hover {
+            background: rgba(200,150,60,0.25);
+            border-color: #c8a040;
+            box-shadow: 0 0 8px rgba(200,150,60,0.2);
+        }
+        .ws-buy-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        #ws-close-btn {
+            display: block;
+            margin: 14px auto 0;
+            padding: 8px 30px;
+            background: #222;
+            border: 1px solid #555;
+            color: #999;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        #ws-close-btn:hover { border-color: #8a6a30; color: #d4a040; }
+
+        /* ==================== 键位说明 ==================== */
+        #keyhelp-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.93);
+            z-index: 4100;
+            align-items: center;
+            justify-content: center;
+        }
+        #kh-inner {
+            background: linear-gradient(180deg, #1a1208, #0d0804);
+            border: 2px solid #6a8a30;
+            border-radius: 16px;
+            padding: 24px 30px;
+            width: 480px;
+            max-width: 92%;
+            box-shadow: 0 0 40px rgba(100,140,30,0.2);
+        }
+        #kh-inner h2 {
+            color: #a0c040;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+        .kh-section-title {
+            color: #8a6a30;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 10px 0 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(100,140,30,0.15);
+        }
+        .kh-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+        }
+        .kh-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 14px;
+        }
+        .kh-key {
+            background: rgba(100,140,30,0.12);
+            border: 1px solid rgba(100,140,30,0.25);
+            border-radius: 4px;
+            padding: 2px 8px;
+            color: #a0c040;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .kh-desc {
+            color: #8a8a6a;
+            font-size: 13px;
+        }
+        #kh-close-btn {
+            display: block;
+            margin: 16px auto 0;
+            padding: 8px 30px;
+            background: #222;
+            border: 1px solid #555;
+            color: #999;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        #kh-close-btn:hover { border-color: #6a8a30; color: #a0c040; }
+
+        /* ==================== 传奇图鉴 ==================== */
+        #codex-modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.93); z-index: 4100;
+            align-items: center; justify-content: center;
+        }
+        #cx-inner {
+            background: linear-gradient(180deg, #1a1008, #0d0604);
+            border: 2px solid #c8a040; border-radius: 16px;
+            padding: 24px 30px; width: 620px; max-width: 94%;
+            max-height: 85vh; overflow-y: auto;
+            box-shadow: 0 0 40px rgba(200,160,40,0.2);
+        }
+        #cx-inner h2 { color: #e8c860; text-align: center; font-size: 20px; margin-bottom: 6px; }
+        #cx-subtitle { text-align: center; color: #8a6a40; font-size: 13px; margin-bottom: 14px; }
+        #cx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .cx-card {
+            background: rgba(20,15,8,0.6); border: 1px solid rgba(180,140,60,0.2);
+            border-radius: 10px; padding: 10px 12px; font-size: 13px;
+        }
+        .cx-card.locked { opacity: 0.4; border-color: rgba(100,80,40,0.1); }
+        .cx-card.unlocked { border-color: rgba(220,180,60,0.5); }
+        .cx-name { color: #e8c860; font-weight: bold; font-size: 14px; }
+        .cx-lore { color: #8a6a40; font-size: 11px; margin-top: 3px; }
+        .cx-status { font-size: 18px; }
+        #cx-close-btn {
+            display: block; margin: 16px auto 0; padding: 8px 30px;
+            background: #222; border: 1px solid #555; color: #999;
+            border-radius: 6px; cursor: pointer; font-size: 14px;
+        }
+        #cx-close-btn:hover { border-color: #c8a040; color: #e8c860; }
