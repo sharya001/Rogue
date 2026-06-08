@@ -83,7 +83,10 @@
     50% { text-shadow: 0 0 10px #0ff, 0 0 22px #0ff, 0 0 36px #0cc; transform: scale(1.15); }
 }
 .wall { color: #666; }
-.floor { color: #333; opacity: 0.2; }
+.floor { color: #333; opacity: 0.35; }
+.floor.abyss-floor { color: #444; opacity: 0.5; text-shadow: 0 0 4px rgba(0,255,0,0.15); }
+.floor.voidzone-floor { color: #66a; opacity: 0.5; text-shadow: 0 0 4px rgba(100,100,255,0.2); }
+.floor.castle-floor { color: #a33; opacity: 0.4; }
 .dark-fog { color: #111 !important; opacity: 0.15; }
 .deco { text-shadow: 0 0 4px currentColor; }
 

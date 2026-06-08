@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>深渊文字迷宫 v3.43.3</title>
+    <title>深渊文字迷宫 v3.43.4</title>
     <style>
 /* === base.css === */
 * {
@@ -628,7 +628,10 @@
     50% { text-shadow: 0 0 10px #0ff, 0 0 22px #0ff, 0 0 36px #0cc; transform: scale(1.15); }
 }
 .wall { color: #666; }
-.floor { color: #333; opacity: 0.2; }
+.floor { color: #333; opacity: 0.35; }
+.floor.abyss-floor { color: #444; opacity: 0.5; text-shadow: 0 0 4px rgba(0,255,0,0.15); }
+.floor.voidzone-floor { color: #66a; opacity: 0.5; text-shadow: 0 0 4px rgba(100,100,255,0.2); }
+.floor.castle-floor { color: #a33; opacity: 0.4; }
 .dark-fog { color: #111 !important; opacity: 0.15; }
 .deco { text-shadow: 0 0 4px currentColor; }
 
@@ -975,6 +978,21 @@
     0% { transform: translateY(0); }
     100% { transform: translateY(6px); }
 }
+#intro-animation::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 50% 120%, rgba(0,40,0,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% -20%, rgba(20,0,40,0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 4;
+    animation: abyss-pulse 4s ease-in-out infinite;
+}
+@keyframes abyss-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
 #intro-vignette {
     position: absolute;
     top: 0; left: 0;
@@ -1029,10 +1047,11 @@
     letter-spacing: 8px;
     text-shadow: 0 0 20px rgba(0,255,0,0.5), 0 0 60px rgba(0,200,0,0.3), 0 0 100px rgba(0,150,0,0.2), 0 2px 4px #000;
     animation: title-glow 2s ease-in-out infinite;
+    position: relative;
 }
 @keyframes title-glow {
     0%, 100% { text-shadow: 0 0 20px rgba(0,255,0,0.5), 0 0 60px rgba(0,200,0,0.3), 0 0 100px rgba(0,150,0,0.2), 0 2px 4px #000; }
-    50% { text-shadow: 0 0 40px rgba(0,255,0,0.8), 0 0 100px rgba(0,220,0,0.5), 0 0 150px rgba(0,180,0,0.3), 0 2px 4px #000; }
+    50% { text-shadow: 0 0 40px rgba(0,255,0,0.8), 0 0 100px rgba(0,220,0,0.5), 0 0 150px rgba(0,180,0,0.3), 0 2px 4px #000, 0 0 200px rgba(0,255,0,0.15); }
 }
 .intro-subtitle {
     font-size: 14px;
@@ -1042,6 +1061,7 @@
     z-index: 20;
     text-shadow: 0 0 4px rgba(0,180,100,0.3);
     transition: opacity 1s ease;
+    letter-spacing: 4px;
 }
 .intro-subtitle.show { opacity: 0.8; }
 .intro-particles {
@@ -1059,6 +1079,8 @@
 .particle.ember { color: #a40; font-size: 10px; }
 .particle.skull { color: #704; font-size: 18px; }
 .particle.dust  { color: #445; font-size: 6px; }
+.particle.bubble { color: #0f3; font-size: 8px; }
+.particle.abyss { color: #304; font-size: 16px; }
 @keyframes fall-particle {
     0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
     5% { opacity: var(--p-opacity, 0.5); }
@@ -1072,6 +1094,24 @@
     0% { transform: translateY(0) scale(0.5); opacity: 0; }
     10% { opacity: 0.7; }
     100% { transform: translateY(-110vh) scale(0.1); opacity: 0; }
+}
+.particle.bubble {
+    animation: rise-bubble linear forwards;
+}
+@keyframes rise-bubble {
+    0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+    10% { opacity: var(--p-opacity, 0.4); }
+    50% { transform: translateY(-50vh) translateX(calc(var(--p-sway, 0) * 1px)) scale(1); }
+    100% { transform: translateY(-110vh) translateX(calc(var(--p-sway, 0) * 2px)) scale(0.5); opacity: 0; }
+}
+.particle.abyss {
+    animation: drift-abyss linear forwards;
+}
+@keyframes drift-abyss {
+    0% { transform: translate(0, 0) rotate(0deg) scale(0.5); opacity: 0; }
+    10% { opacity: var(--p-opacity, 0.15); }
+    90% { opacity: calc(var(--p-opacity, 0.15) * 0.5); }
+    100% { transform: translate(var(--p-dx, 50px), var(--p-dy, -80px)) rotate(var(--p-rotate, 180deg)) scale(1.2); opacity: 0; }
 }
 .intro-skip {
     position: absolute;
@@ -2299,7 +2339,7 @@
                                     <button class="sbb-btn" onclick="showKeyHelp()">⌨️ 键位</button>
                                     <button class="sbb-btn" id="auto-atk-btn-start" onclick="toggleAutoAttack()">⚔️ 自动</button>
                     <button class="sbb-btn" onclick="openSettings()">⚙️ 设置</button>
-                    <span id="start-version">v3.43.3</span>
+                    <span id="start-version">v3.43.4</span>
                 </div>
             </div>
         </div>
@@ -2853,14 +2893,14 @@ SHOP_ITEMS: [
             
             // 地图主题配置
             THEMES: {
-                abyss: {
+abyss: {
                     name: '深渊',
                     icon: '🌑',
                     wall: '🧱',
                     wallColor: '#666',
                     floor: '·',
-                    floorColor: '#333',
-                    exit: '🌀',  // 传送门
+                    floorColor: '#444',
+                    exit: '🌀',
                                         bgColor: '#0a0a0a',
                                         borderColor: '#0f0',
                                         accentColor: '#0f0'
@@ -2928,9 +2968,9 @@ ice: {
                                         name: '虚空',
                                         icon: '🌀',
                                         wall: '⬛',
-                                        wallColor: '#226',
+                                        wallColor: '#336',
                                         floor: '·',
-                                        floorColor: '#114',
+                                        floorColor: '#448',
                                         exit: '🌀',
                                         bgColor: '#020210',
                                         borderColor: '#44f',
@@ -4415,44 +4455,41 @@ function generateCastle(returnVisit = false) {
                                                                     const npc = gameState.shopNPCs.find(n => n.x === x && n.y === y);
                                                                     if (npc) {
                                                                         text = npc.icon;
-                                                                        className = 'shop-npc';
+                                                                         className = 'shop-npc';
+                                                                     } else {
+                                                                         text = themeObj.floor;
+                                                                         className = 'floor ' + (gameState.theme || 'abyss') + '-floor';
+                                                                         style = `color:${themeObj.floorColor}`;
+                                                                     }
+                                                                 } else {
+                                                                     // 城堡：检查 NPC 和传送门
+                                                                     if (isCastle) {
+                                                                         const cnpc = gameState.castleNPCs.find(n => n.x === x && n.y === y);
+                                                                         if (cnpc) {
+                                                                             text = cnpc.icon;
+                                                                             className = 'shop-npc';
+                                                                             style = 'color:#fa0; font-size:1.4em; cursor:pointer;';
+                                                                         } else if (x === gameState.castlePortal.x && y === gameState.castlePortal.y) {
+                                                                                                                                                     text = '🌀';
+                                                                                                                                                     className = 'exit';
+                                                                                                                                                     style = 'font-size:2em;';
+                                                                                                                                                 } else {
+                                                                                                                                                     // 检查装饰物
+                                                                                                                                                     const deco = gameState.castleDecorations.find(d => d.x === x && d.y === y);
+                                                                                                                                                     if (deco) {
+                                                                                                                                                         text = deco.icon; className = 'deco'; style = `color:${deco.color}; font-size:${deco.size};`;
+                                                                                                                                                     } else if (gameState.castleCarpet && gameState.castleCarpet.find(c => c.x === x && c.y === y)) {
+                                                                                                                                                         text = '◆'; className = 'floor'; style = 'color:#a33;';
+                                                                                                                                                     } else {
+                                                                                                                                                         text = themeObj.floor;
+                                                                                                                                                         className = 'floor castle-floor';
+                                                                                                                                                         style = `color:${themeObj.floorColor}`;
+                                                                                                                                                     }
+                                                                                                                                                 }
                                                                     } else {
                                                                         text = themeObj.floor;
-                                                                        className = 'floor';
-                                                                        style = `color:${themeObj.floorColor}`;
-                                                                    }
-                                                                } else {
-                                                                    // 城堡：检查 NPC 和传送门
-                                                                    if (isCastle) {
-                                                                        const cnpc = gameState.castleNPCs.find(n => n.x === x && n.y === y);
-                                                                        if (cnpc) {
-                                                                            text = cnpc.icon;
-                                                                            className = 'shop-npc';
-                                                                            style = 'color:#fa0; font-size:1.4em; cursor:pointer;';
-                                                                        } else if (x === gameState.castlePortal.x && y === gameState.castlePortal.y) {
-                                                                                                                                                    text = '🌀';
-                                                                                                                                                    className = 'exit';
-                                                                                                                                                    style = 'font-size:2em;';
-                                                                                                                                                } else {
-                                                                                                                                                    // 检查装饰物
-                                                                                                                                                    const deco = gameState.castleDecorations.find(d => d.x === x && d.y === y);
-                                                                                                                                                    if (deco) {
-                                                                                                                                                        text = deco.icon; className = 'deco'; style = `color:${deco.color}; font-size:${deco.size};`;
-                                                                                                                                                    } else if (gameState.castleCarpet && gameState.castleCarpet.find(c => c.x === x && c.y === y)) {
-                                                                                                                                                        text = '◆'; className = 'floor'; style = 'color:#a33;';
-                                                                                                                                                    } else {
-                                                                                                                                                        text = themeObj.floor;
-                                                                                                                                                        className = 'floor';
-                                                                                                                                                        style = `color:${themeObj.floorColor}`;
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                    } else {
-                                                                        text = themeObj.floor;
-                                                                        className = 'floor';
-                                                                        style = `color:${themeObj.floorColor}`;
-                                                                    }
-                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                         className = 'floor ' + (gameState.theme || 'abyss') + '-floor';
+                                                                         style = `color:${themeObj.floorColor}`;
                                                                                                                                                                                                                                                                                                                                                                                                     }
                                                                                                                                                                                                                                                                                                                                                                                                 }
 
@@ -9911,9 +9948,13 @@ function playIntroAnimation() {
 
     const particles = document.getElementById('intro-particles');
     particles.innerHTML = '';
-    // 下落符文粒子
+    
+    // 深渊脉动背景 - 周期性闪光
+    particles.insertAdjacentHTML('beforebegin', '<div id="abyss-flash" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:0;transition:opacity 0.3s;"></div>');
+    
+    // 下落符文粒子（增强）
     const runes = ['#','▓','▒','░','█','▌','▐','■','◆','◇','○','●','◈','✦','✧','†','‡','ꝏ','⧖','⧗'];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 50; i++) {
         const p = document.createElement('span');
         p.className = 'particle rune';
         p.textContent = runes[Math.floor(Math.random() * runes.length)];
@@ -9922,10 +9963,11 @@ function playIntroAnimation() {
         p.style.setProperty('--p-rotate', (Math.random() - 0.5) * 720 + 'deg');
         p.style.animationDuration = (3 + Math.random() * 5) + 's';
         p.style.animationDelay = Math.random() * 4 + 's';
+        p.style.fontSize = (10 + Math.random() * 8) + 'px';
         particles.appendChild(p);
     }
-    // 上升火星
-    for (let i = 0; i < 25; i++) {
+    // 上升火星（增强）
+    for (let i = 0; i < 30; i++) {
         const p = document.createElement('span');
         p.className = 'particle ember';
         p.textContent = ['✦','·','*','•','✧'][Math.floor(Math.random() * 5)];
@@ -9933,10 +9975,11 @@ function playIntroAnimation() {
         p.style.bottom = '0px';
         p.style.animationDuration = (2 + Math.random() * 3) + 's';
         p.style.animationDelay = Math.random() * 3 + 's';
+        p.style.fontSize = (8 + Math.random() * 6) + 'px';
         particles.appendChild(p);
     }
-    // 漂浮暗影
-    for (let i = 0; i < 10; i++) {
+    // 漂浮暗影（增强）
+    for (let i = 0; i < 15; i++) {
         const p = document.createElement('span');
         p.className = 'particle skull';
         p.textContent = ['💀','👁️','🜂','🜃','🝊'][Math.floor(Math.random() * 5)];
@@ -9945,6 +9988,33 @@ function playIntroAnimation() {
         p.style.setProperty('--p-rotate', '20deg');
         p.style.animationDuration = (6 + Math.random() * 6) + 's';
         p.style.animationDelay = Math.random() * 5 + 's';
+        particles.appendChild(p);
+    }
+    // 深渊气泡（新增）
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle bubble';
+        p.textContent = ['◦','∙','·','○','●'][Math.floor(Math.random() * 5)];
+        p.style.left = Math.random() * 100 + '%';
+        p.style.setProperty('--p-opacity', (0.2 + Math.random() * 0.3));
+        p.style.setProperty('--p-sway', (Math.random() - 0.5) * 60);
+        p.style.animationDuration = (5 + Math.random() * 6) + 's';
+        p.style.animationDelay = Math.random() * 4 + 's';
+        particles.appendChild(p);
+    }
+    // 深渊迷雾粒子（新增）
+    for (let i = 0; i < 12; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle abyss';
+        p.textContent = ['◈','◆','▪'][Math.floor(Math.random() * 3)];
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.setProperty('--p-opacity', (0.08 + Math.random() * 0.12));
+        p.style.setProperty('--p-dx', (Math.random() - 0.5) * 200 + 'px');
+        p.style.setProperty('--p-dy', (Math.random() - 0.5) * 200 + 'px');
+        p.style.setProperty('--p-rotate', (Math.random() - 0.5) * 360 + 'deg');
+        p.style.animationDuration = (10 + Math.random() * 8) + 's';
+        p.style.animationDelay = Math.random() * 6 + 's';
         particles.appendChild(p);
     }
 
@@ -9973,16 +10043,38 @@ function playIntroAnimation() {
         introTimers.push(t);
     });
 
-    // 标题登场（缩放弹入 + 绿光脉冲）
+    // 标题登场（缩放弹入 + 绿光脉冲 + 深渊闪光）
     introTimers.push(setTimeout(() => {
-        document.getElementById('intro-title-wrap').classList.add('show');
+        const titleWrap = document.getElementById('intro-title-wrap');
+        titleWrap.classList.add('show');
         sfx.play('boss');
+        // 深渊闪光效果
+        const flash = document.getElementById('abyss-flash');
+        if (flash) {
+            flash.style.background = 'radial-gradient(ellipse at center, rgba(0,255,0,0.15) 0%, transparent 70%)';
+            flash.style.opacity = '1';
+            setTimeout(() => { flash.style.opacity = '0'; }, 200);
+        }
     }, 4400));
 
     // 副标题淡入
     introTimers.push(setTimeout(() => {
         document.getElementById('intro-subtitle').classList.add('show');
     }, 5200));
+
+    // 深渊脉动闪光（循环）
+    let abyssInterval = null;
+    introTimers.push(setTimeout(() => {
+        const flash = document.getElementById('abyss-flash');
+        if (flash) {
+            abyssInterval = setInterval(() => {
+                flash.style.background = 'radial-gradient(ellipse at center, rgba(0,40,0,0.08) 0%, transparent 60%)';
+                flash.style.opacity = '1';
+                setTimeout(() => { flash.style.opacity = '0'; }, 1500);
+            }, 4000);
+        }
+    }, 6000));
+    introTimers.push({ type: 'interval', value: abyssInterval });
 
     // 自动结束
     introTimers.push(setTimeout(() => { finishIntro(); }, 8000));
@@ -9997,12 +10089,24 @@ function finishIntro() {
     if (introFinished) return;
     introFinished = true;
 
-    introTimers.forEach(t => { try { clearTimeout(t); clearInterval(t); } catch(e) {} });
+    introTimers.forEach(t => {
+        try {
+            if (typeof t === 'object' && t && t.type === 'interval' && t.value) {
+                clearInterval(t.value);
+            } else {
+                clearTimeout(t);
+                clearInterval(t);
+            }
+        } catch(e) {}
+    });
     introTimers = [];
 
     initAchievements();
 
     const intro = document.getElementById('intro-animation');
+    const flash = document.getElementById('abyss-flash');
+    if (flash) flash.remove();
+
     intro.style.transition = 'opacity 0.5s ease';
     intro.style.opacity = '0';
 

@@ -195,14 +195,14 @@ SHOP_ITEMS: [
             
             // 地图主题配置
             THEMES: {
-                abyss: {
+abyss: {
                     name: '深渊',
                     icon: '🌑',
                     wall: '🧱',
                     wallColor: '#666',
                     floor: '·',
-                    floorColor: '#333',
-                    exit: '🌀',  // 传送门
+                    floorColor: '#444',
+                    exit: '🌀',
                                         bgColor: '#0a0a0a',
                                         borderColor: '#0f0',
                                         accentColor: '#0f0'
@@ -270,9 +270,9 @@ ice: {
                                         name: '虚空',
                                         icon: '🌀',
                                         wall: '⬛',
-                                        wallColor: '#226',
+                                        wallColor: '#336',
                                         floor: '·',
-                                        floorColor: '#114',
+                                        floorColor: '#448',
                                         exit: '🌀',
                                         bgColor: '#020210',
                                         borderColor: '#44f',
