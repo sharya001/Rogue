@@ -630,19 +630,20 @@
                                                                                                                                                 return;
                                                                                                                                             }
 
-                                                                                                                                             // 钥匙系统：普通怪物被击败时掉落钥匙（1/n概率，最后一只保底）
-                             const droppedEnemyPos = { x: enemy.x, y: enemy.y };
-                             if (!enemy.isBoss && !enemy.isElite && gameState.exitLocked && !gameState.keyPicked) {
-                                 gameState.enemies.splice(enemyIndex, 1);
-                                 const remainingNormal = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
-                                 let keyChance = 1 / gameState.totalEnemies;
-                                 if (remainingNormal === 0) keyChance = 1.0;  // 最后一只保底
-                                 if (Math.random() < keyChance) {
-                                     if (!gameState.chests) gameState.chests = [];
-                                     gameState.chests.push({ x: droppedEnemyPos.x, y: droppedEnemyPos.y, type: 'key' });
-                                     addLog(`🔑 敌人掉落了一把钥匙！`, 'log-gain');
-                                 }
-                             } else {
+                                                                                                                                              // 钥匙系统：普通怪物被击败时掉落钥匙（1/n概率，最后一只保底）
+                              const droppedEnemyPos = { x: enemy.x, y: enemy.y };
+                              if (!enemy.isBoss && !enemy.isElite && gameState.exitLocked && !gameState.keyPicked && !gameState._keyDropped) {
+                                  gameState.enemies.splice(enemyIndex, 1);
+                                  const remainingNormal = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
+                                  let keyChance = 1 / gameState.totalEnemies;
+                                  if (remainingNormal === 0) keyChance = 1.0;  // 最后一只保底
+                                  if (Math.random() < keyChance) {
+                                      if (!gameState.chests) gameState.chests = [];
+                                      gameState.chests.push({ x: droppedEnemyPos.x, y: droppedEnemyPos.y, type: 'key' });
+                                      gameState._keyDropped = true;  // 标记：本层钥匙已掉落，防止重复
+                                      addLog(`🔑 敌人掉落了一把钥匙！`, 'log-gain');
+                                  }
+                              } else {
                                  gameState.enemies.splice(enemyIndex, 1);
                              }
 
@@ -1019,19 +1020,20 @@ hideEnemyPanel();
                    // 检查战斗是否已结束
                    if (enemy.hp <= 0 || player.hp <= 0) {
                       if (enemy.hp <= 0) {
-                         // 钥匙系统：autoCombatRound 击杀也需掉落钥匙（1/n概率，最后一只保底）
-                         const droppedEnemyPos = { x: enemy.x, y: enemy.y };
-                         if (!enemy.isBoss && !enemy.isElite && gameState.exitLocked && !gameState.keyPicked) {
-                             gameState.enemies.splice(enemyIndex, 1);
-                             const remainingNormal = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
-                             let keyChance = 1 / gameState.totalEnemies;
-                             if (remainingNormal === 0) keyChance = 1.0;  // 最后一只保底
-                             if (Math.random() < keyChance) {
-                                 if (!gameState.chests) gameState.chests = [];
-                                 gameState.chests.push({ x: droppedEnemyPos.x, y: droppedEnemyPos.y, type: 'key' });
-                                 addLog(`🔑 敌人掉落了一把钥匙！`, 'log-gain');
-                             }
-                         } else {
+                          // 钥匙系统：autoCombatRound 击杀也需掉落钥匙（1/n概率，最后一只保底）
+                          const droppedEnemyPos = { x: enemy.x, y: enemy.y };
+                          if (!enemy.isBoss && !enemy.isElite && gameState.exitLocked && !gameState.keyPicked && !gameState._keyDropped) {
+                              gameState.enemies.splice(enemyIndex, 1);
+                              const remainingNormal = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
+                              let keyChance = 1 / gameState.totalEnemies;
+                              if (remainingNormal === 0) keyChance = 1.0;  // 最后一只保底
+                              if (Math.random() < keyChance) {
+                                  if (!gameState.chests) gameState.chests = [];
+                                  gameState.chests.push({ x: droppedEnemyPos.x, y: droppedEnemyPos.y, type: 'key' });
+                                  gameState._keyDropped = true;  // 标记：本层钥匙已掉落，防止重复
+                                  addLog(`🔑 敌人掉落了一把钥匙！`, 'log-gain');
+                              }
+                          } else {
                              gameState.enemies.splice(enemyIndex, 1);
                         }
                         addLog(`${enemy.name || '敌人'}被击败！获得 ${enemy.exp} 经验 + ${enemy.gold} 金币`, 'log-gain');
@@ -1143,19 +1145,20 @@ hideEnemyPanel();
                             sfx.play('kill');
                             spawnMutationSummon(enemy);
                             afterKillEffects(player, affix);
-                             // 钥匙系统：普通层掉落钥匙（1/n概率，最后一只保底）
-                             const droppedEnemyPos = { x: enemy.x, y: enemy.y };
-                             if (!enemy.isBoss && !enemy.isElite && gameState.exitLocked && !gameState.keyPicked) {
-                                 gameState.enemies.splice(enemyIndex, 1);
-                                 const remainingNormal = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
-                                 let keyChance = 1 / gameState.totalEnemies;
-                                 if (remainingNormal === 0) keyChance = 1.0;  // 最后一只保底
-                                 if (Math.random() < keyChance) {
-                                     if (!gameState.chests) gameState.chests = [];
-                                     gameState.chests.push({ x: droppedEnemyPos.x, y: droppedEnemyPos.y, type: 'key' });
-                                     addLog(`🔑 敌人掉落了一把钥匙！`, 'log-gain');
-                                 }
-                             } else {
+                              // 钥匙系统：普通层掉落钥匙（1/n概率，最后一只保底）
+                              const droppedEnemyPos = { x: enemy.x, y: enemy.y };
+                              if (!enemy.isBoss && !enemy.isElite && gameState.exitLocked && !gameState.keyPicked && !gameState._keyDropped) {
+                                  gameState.enemies.splice(enemyIndex, 1);
+                                  const remainingNormal = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
+                                  let keyChance = 1 / gameState.totalEnemies;
+                                  if (remainingNormal === 0) keyChance = 1.0;  // 最后一只保底
+                                  if (Math.random() < keyChance) {
+                                      if (!gameState.chests) gameState.chests = [];
+                                      gameState.chests.push({ x: droppedEnemyPos.x, y: droppedEnemyPos.y, type: 'key' });
+                                      gameState._keyDropped = true;  // 标记：本层钥匙已掉落，防止重复
+                                      addLog(`🔑 敌人掉落了一把钥匙！`, 'log-gain');
+                                  }
+                              } else {
                                  gameState.enemies.splice(enemyIndex, 1);
                              }
                             hideEnemyPanel();

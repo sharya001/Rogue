@@ -259,6 +259,7 @@ function updateStatusBar() {
                     // 钥匙：自动拾取，玩家移动到钥匙位置（不解锁，钥匙进入背包）
                     gameState.chests.splice(chestIndex, 1);
                     gameState.keyPicked = true;
+                    gameState._keyDropped = false;  // 重置钥匙掉落标记
                     addLog(`🔑 拾取了钥匙！走到锁住的传送门上自动解锁。`, 'log-gain');
                     gameState.player.x = newX;
                     gameState.player.y = newY;

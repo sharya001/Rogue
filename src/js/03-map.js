@@ -132,7 +132,12 @@ function generateCastle(returnVisit = false) {
                         generateCastle();
                         return;
                     }
-            
+
+                    // 重置钥匙相关标记
+                    gameState.keyPicked = false;
+                    gameState._keyDropped = false;
+                    gameState.exitLocked = true;
+
                     // 根据层数切换地图主题
             const themeIndex = Math.floor((gameState.floor - 1) / 5) % CONFIG.THEME_ORDER.length;
             const newTheme = CONFIG.THEME_ORDER[themeIndex];
@@ -429,13 +434,10 @@ function generateCastle(returnVisit = false) {
                                                                             }
                                                                             }  // end else (Boss/普通敌人)
 
-                                        // 钥匙系统：记录普通层初始普通怪物总数（v3.42.0）
-                                        if (!gameState.isBossFloor && !gameState.isShopFloor && !gameState.specialRoom) {
-                                            gameState.totalEnemies = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
-                                            gameState.exitLocked = true;
-                                        } else {
-                                            gameState.exitLocked = false;
-                                        }
+                                         // 钥匙系统：记录普通层初始普通怪物总数（v3.42.0）
+                                         if (!gameState.isBossFloor && !gameState.isShopFloor && !gameState.specialRoom) {
+                                             gameState.totalEnemies = gameState.enemies.filter(e => !e.isBoss && !e.isElite).length;
+                                         }
             
                                                                                                                         // 放置药水（随机 ~50% 概率出现，1-3瓶，类型按稀有度权重随机）
                                                                                                     gameState.potions = [];
