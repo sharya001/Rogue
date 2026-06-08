@@ -43,9 +43,13 @@ function playIntroAnimation() {
 
     const particles = document.getElementById('intro-particles');
     particles.innerHTML = '';
-    // 下落符文粒子
+    
+    // 深渊脉动背景 - 周期性闪光
+    particles.insertAdjacentHTML('beforebegin', '<div id="abyss-flash" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:0;transition:opacity 0.3s;"></div>');
+    
+    // 下落符文粒子（增强）
     const runes = ['#','▓','▒','░','█','▌','▐','■','◆','◇','○','●','◈','✦','✧','†','‡','ꝏ','⧖','⧗'];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 50; i++) {
         const p = document.createElement('span');
         p.className = 'particle rune';
         p.textContent = runes[Math.floor(Math.random() * runes.length)];
@@ -54,10 +58,11 @@ function playIntroAnimation() {
         p.style.setProperty('--p-rotate', (Math.random() - 0.5) * 720 + 'deg');
         p.style.animationDuration = (3 + Math.random() * 5) + 's';
         p.style.animationDelay = Math.random() * 4 + 's';
+        p.style.fontSize = (10 + Math.random() * 8) + 'px';
         particles.appendChild(p);
     }
-    // 上升火星
-    for (let i = 0; i < 25; i++) {
+    // 上升火星（增强）
+    for (let i = 0; i < 30; i++) {
         const p = document.createElement('span');
         p.className = 'particle ember';
         p.textContent = ['✦','·','*','•','✧'][Math.floor(Math.random() * 5)];
@@ -65,10 +70,11 @@ function playIntroAnimation() {
         p.style.bottom = '0px';
         p.style.animationDuration = (2 + Math.random() * 3) + 's';
         p.style.animationDelay = Math.random() * 3 + 's';
+        p.style.fontSize = (8 + Math.random() * 6) + 'px';
         particles.appendChild(p);
     }
-    // 漂浮暗影
-    for (let i = 0; i < 10; i++) {
+    // 漂浮暗影（增强）
+    for (let i = 0; i < 15; i++) {
         const p = document.createElement('span');
         p.className = 'particle skull';
         p.textContent = ['💀','👁️','🜂','🜃','🝊'][Math.floor(Math.random() * 5)];
@@ -77,6 +83,33 @@ function playIntroAnimation() {
         p.style.setProperty('--p-rotate', '20deg');
         p.style.animationDuration = (6 + Math.random() * 6) + 's';
         p.style.animationDelay = Math.random() * 5 + 's';
+        particles.appendChild(p);
+    }
+    // 深渊气泡（新增）
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle bubble';
+        p.textContent = ['◦','∙','·','○','●'][Math.floor(Math.random() * 5)];
+        p.style.left = Math.random() * 100 + '%';
+        p.style.setProperty('--p-opacity', (0.2 + Math.random() * 0.3));
+        p.style.setProperty('--p-sway', (Math.random() - 0.5) * 60);
+        p.style.animationDuration = (5 + Math.random() * 6) + 's';
+        p.style.animationDelay = Math.random() * 4 + 's';
+        particles.appendChild(p);
+    }
+    // 深渊迷雾粒子（新增）
+    for (let i = 0; i < 12; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle abyss';
+        p.textContent = ['◈','◆','▪'][Math.floor(Math.random() * 3)];
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.setProperty('--p-opacity', (0.08 + Math.random() * 0.12));
+        p.style.setProperty('--p-dx', (Math.random() - 0.5) * 200 + 'px');
+        p.style.setProperty('--p-dy', (Math.random() - 0.5) * 200 + 'px');
+        p.style.setProperty('--p-rotate', (Math.random() - 0.5) * 360 + 'deg');
+        p.style.animationDuration = (10 + Math.random() * 8) + 's';
+        p.style.animationDelay = Math.random() * 6 + 's';
         particles.appendChild(p);
     }
 
@@ -105,16 +138,38 @@ function playIntroAnimation() {
         introTimers.push(t);
     });
 
-    // 标题登场（缩放弹入 + 绿光脉冲）
+    // 标题登场（缩放弹入 + 绿光脉冲 + 深渊闪光）
     introTimers.push(setTimeout(() => {
-        document.getElementById('intro-title-wrap').classList.add('show');
+        const titleWrap = document.getElementById('intro-title-wrap');
+        titleWrap.classList.add('show');
         sfx.play('boss');
+        // 深渊闪光效果
+        const flash = document.getElementById('abyss-flash');
+        if (flash) {
+            flash.style.background = 'radial-gradient(ellipse at center, rgba(0,255,0,0.15) 0%, transparent 70%)';
+            flash.style.opacity = '1';
+            setTimeout(() => { flash.style.opacity = '0'; }, 200);
+        }
     }, 4400));
 
     // 副标题淡入
     introTimers.push(setTimeout(() => {
         document.getElementById('intro-subtitle').classList.add('show');
     }, 5200));
+
+    // 深渊脉动闪光（循环）
+    let abyssInterval = null;
+    introTimers.push(setTimeout(() => {
+        const flash = document.getElementById('abyss-flash');
+        if (flash) {
+            abyssInterval = setInterval(() => {
+                flash.style.background = 'radial-gradient(ellipse at center, rgba(0,40,0,0.08) 0%, transparent 60%)';
+                flash.style.opacity = '1';
+                setTimeout(() => { flash.style.opacity = '0'; }, 1500);
+            }, 4000);
+        }
+    }, 6000));
+    introTimers.push({ type: 'interval', value: abyssInterval });
 
     // 自动结束
     introTimers.push(setTimeout(() => { finishIntro(); }, 8000));
@@ -129,12 +184,24 @@ function finishIntro() {
     if (introFinished) return;
     introFinished = true;
 
-    introTimers.forEach(t => { try { clearTimeout(t); clearInterval(t); } catch(e) {} });
+    introTimers.forEach(t => {
+        try {
+            if (typeof t === 'object' && t && t.type === 'interval' && t.value) {
+                clearInterval(t.value);
+            } else {
+                clearTimeout(t);
+                clearInterval(t);
+            }
+        } catch(e) {}
+    });
     introTimers = [];
 
     initAchievements();
 
     const intro = document.getElementById('intro-animation');
+    const flash = document.getElementById('abyss-flash');
+    if (flash) flash.remove();
+
     intro.style.transition = 'opacity 0.5s ease';
     intro.style.opacity = '0';
 

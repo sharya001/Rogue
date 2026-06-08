@@ -281,6 +281,21 @@
     0% { transform: translateY(0); }
     100% { transform: translateY(6px); }
 }
+#intro-animation::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 50% 120%, rgba(0,40,0,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% -20%, rgba(20,0,40,0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 4;
+    animation: abyss-pulse 4s ease-in-out infinite;
+}
+@keyframes abyss-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
 #intro-vignette {
     position: absolute;
     top: 0; left: 0;
@@ -335,10 +350,11 @@
     letter-spacing: 8px;
     text-shadow: 0 0 20px rgba(0,255,0,0.5), 0 0 60px rgba(0,200,0,0.3), 0 0 100px rgba(0,150,0,0.2), 0 2px 4px #000;
     animation: title-glow 2s ease-in-out infinite;
+    position: relative;
 }
 @keyframes title-glow {
     0%, 100% { text-shadow: 0 0 20px rgba(0,255,0,0.5), 0 0 60px rgba(0,200,0,0.3), 0 0 100px rgba(0,150,0,0.2), 0 2px 4px #000; }
-    50% { text-shadow: 0 0 40px rgba(0,255,0,0.8), 0 0 100px rgba(0,220,0,0.5), 0 0 150px rgba(0,180,0,0.3), 0 2px 4px #000; }
+    50% { text-shadow: 0 0 40px rgba(0,255,0,0.8), 0 0 100px rgba(0,220,0,0.5), 0 0 150px rgba(0,180,0,0.3), 0 2px 4px #000, 0 0 200px rgba(0,255,0,0.15); }
 }
 .intro-subtitle {
     font-size: 14px;
@@ -348,6 +364,7 @@
     z-index: 20;
     text-shadow: 0 0 4px rgba(0,180,100,0.3);
     transition: opacity 1s ease;
+    letter-spacing: 4px;
 }
 .intro-subtitle.show { opacity: 0.8; }
 .intro-particles {
@@ -365,6 +382,8 @@
 .particle.ember { color: #a40; font-size: 10px; }
 .particle.skull { color: #704; font-size: 18px; }
 .particle.dust  { color: #445; font-size: 6px; }
+.particle.bubble { color: #0f3; font-size: 8px; }
+.particle.abyss { color: #304; font-size: 16px; }
 @keyframes fall-particle {
     0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
     5% { opacity: var(--p-opacity, 0.5); }
@@ -378,6 +397,24 @@
     0% { transform: translateY(0) scale(0.5); opacity: 0; }
     10% { opacity: 0.7; }
     100% { transform: translateY(-110vh) scale(0.1); opacity: 0; }
+}
+.particle.bubble {
+    animation: rise-bubble linear forwards;
+}
+@keyframes rise-bubble {
+    0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+    10% { opacity: var(--p-opacity, 0.4); }
+    50% { transform: translateY(-50vh) translateX(calc(var(--p-sway, 0) * 1px)) scale(1); }
+    100% { transform: translateY(-110vh) translateX(calc(var(--p-sway, 0) * 2px)) scale(0.5); opacity: 0; }
+}
+.particle.abyss {
+    animation: drift-abyss linear forwards;
+}
+@keyframes drift-abyss {
+    0% { transform: translate(0, 0) rotate(0deg) scale(0.5); opacity: 0; }
+    10% { opacity: var(--p-opacity, 0.15); }
+    90% { opacity: calc(var(--p-opacity, 0.15) * 0.5); }
+    100% { transform: translate(var(--p-dx, 50px), var(--p-dy, -80px)) rotate(var(--p-rotate, 180deg)) scale(1.2); opacity: 0; }
 }
 .intro-skip {
     position: absolute;
