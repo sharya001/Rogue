@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>深渊文字迷宫 v3.43.5</title>
+    <title>深渊文字迷宫 v3.44.0</title>
     <style>
 /* === base.css === */
 * {
@@ -2348,7 +2348,7 @@
                                     <button class="sbb-btn" onclick="showKeyHelp()">⌨️ 键位</button>
                                     <button class="sbb-btn" id="auto-atk-btn-start" onclick="toggleAutoAttack()">⚔️ 自动</button>
                     <button class="sbb-btn" onclick="openSettings()">⚙️ 设置</button>
-                    <span id="start-version">v3.43.5</span>
+                    <span id="start-version">v3.44.0</span>
                 </div>
             </div>
         </div>
@@ -9775,10 +9775,15 @@ _speedPotion: 0, _powerPotion: false, _greedLure: false,
                 function drawCastleBg() {
     const canvas = document.getElementById('start-castle-bg');
     if (!canvas) return;
-    canvas.width = canvas.offsetWidth || window.innerWidth;
-    canvas.height = canvas.offsetHeight || window.innerHeight;
+    // v3.44.0 P0: DPR 感知渲染 — 高分屏按物理像素绘制，避免背景模糊
+    const cssW = canvas.offsetWidth || window.innerWidth;
+    const cssH = canvas.offsetHeight || window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
     const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const W = cssW, H = cssH;
     ctx.clearRect(0, 0, W, H);
 
     // 深空背景
@@ -10459,6 +10464,18 @@ function selectClass(classKey) {
         
         // 窗口大小变化时重新缩放地图
         window.addEventListener('resize', scaleMap);
+
+        // v3.44.0 P0: 窗口大小变化时重绘开始界面城堡背景（防抖，仅开始界面可见时）
+        let castleBgResizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(castleBgResizeTimer);
+            castleBgResizeTimer = setTimeout(() => {
+                const ss = document.getElementById('start-screen');
+                if (ss && ss.style.display !== 'none' && typeof drawCastleBg === 'function') {
+                    drawCastleBg();
+                }
+            }, 150);
+        });
 
         // ======== 08b-keyboard.js ========
         //# sourceURL=08b-keyboard.js

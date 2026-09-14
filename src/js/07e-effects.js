@@ -3,10 +3,15 @@
                 function drawCastleBg() {
     const canvas = document.getElementById('start-castle-bg');
     if (!canvas) return;
-    canvas.width = canvas.offsetWidth || window.innerWidth;
-    canvas.height = canvas.offsetHeight || window.innerHeight;
+    // v3.44.0 P0: DPR 感知渲染 — 高分屏按物理像素绘制，避免背景模糊
+    const cssW = canvas.offsetWidth || window.innerWidth;
+    const cssH = canvas.offsetHeight || window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
     const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const W = cssW, H = cssH;
     ctx.clearRect(0, 0, W, H);
 
     // 深空背景

@@ -468,3 +468,15 @@ function selectClass(classKey) {
         
         // 窗口大小变化时重新缩放地图
         window.addEventListener('resize', scaleMap);
+
+        // v3.44.0 P0: 窗口大小变化时重绘开始界面城堡背景（防抖，仅开始界面可见时）
+        let castleBgResizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(castleBgResizeTimer);
+            castleBgResizeTimer = setTimeout(() => {
+                const ss = document.getElementById('start-screen');
+                if (ss && ss.style.display !== 'none' && typeof drawCastleBg === 'function') {
+                    drawCastleBg();
+                }
+            }, 150);
+        });
