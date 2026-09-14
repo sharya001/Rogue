@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """深渊文字迷宫 - 构建脚本"""
 
-import os, re, sys, io
+import os, re, sys, io, base64
 
 # Windows 终端 UTF-8 支持
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
@@ -116,8 +116,28 @@ def read_template(name):
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
 
+def load_img_b64():
+    """Load all src/img/*.png as base64 data URLs, keyed by filename."""
+    img_dir = os.path.join(SRC, "img")
+    b64 = {}
+    if not os.path.isdir(img_dir):
+        return b64
+    for fname in os.listdir(img_dir):
+        if fname.lower().endswith('.png'):
+            fpath = os.path.join(img_dir, fname)
+            with open(fpath, "rb") as f:
+                data = base64.b64encode(f.read()).decode('ascii')
+            b64[fname] = "data:image/png;base64," + data
+    return b64
+
+
 def build():
     print("Building abyss-labyrinth.html...")
+    # Load sprite images as base64
+    img_b64 = load_img_b64()
+    if img_b64:
+        print(f"  Embedded {len(img_b64)} sprite images")
+
     parts = []
     parts.append(read_template("head_before_style"))
     parts.append("<style>\n")
@@ -134,13 +154,35 @@ def build():
     parts.append("\n")
     parts.append("    <script>\n")
     parts.append("        'use strict';\n\n")
-    for js_file in JS_FILES:
-        js = read_src("js", js_file)
-        if js:
+    # Inject sprite base64 data before other scripts
+    if img_b64:
+        parts.append("        window._spriteB64 = {\n")
+        entries = []
+        for fname, b64url in sorted(img_b64.items()):
+            entries.append(f'            "{fname}": "{b64url}"')
+        parts.append(",\n".join(entries))
+        parts.append("\n        };\n\n")
+        # Also replace img/ paths in JS source with base64 data URLs
+        for js_file in JS_FILES:
+            js = read_src("js", js_file)
+            for fname, b64url in img_b64.items():
+                old_path = f'"img/{fname}"'
+                new_path = f'"{b64url}"'
+                js = js.replace(old_path, new_path)
             parts.append(f"        // ======== {js_file} ========\n")
             parts.append(f"        //# sourceURL={js_file}\n\n")
             parts.append(js)
             parts.append("\n")
+
+    else:
+        # No images - original flow
+        for js_file in JS_FILES:
+            js = read_src("js", js_file)
+            if js:
+                parts.append(f"        // ======== {js_file} ========\n")
+                parts.append(f"        //# sourceURL={js_file}\n\n")
+                parts.append(js)
+                parts.append("\n")
     parts.append("    </script>\n")
     lb = read_src("html", HTML_LEADERBOARD)
     if lb.strip():

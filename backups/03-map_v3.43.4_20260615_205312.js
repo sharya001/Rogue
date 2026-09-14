@@ -257,12 +257,7 @@ function generateCastle(returnVisit = false) {
                                                                             gameState.envEffect = { id: env.id, icon: env.icon, name: env.name, color: env.color };
                                                                             addLog(`${env.icon} 环境效果：${env.name} — ${env.desc}`, 'log-danger');
                                                                         }
-
-                    // Boss层/商店层/特殊房间不需要钥匙，直接解锁传送门 (v3.43.5)
-                    if (gameState.isBossFloor || gameState.isShopFloor || gameState.specialRoom) {
-                        gameState.exitLocked = false;
-                    }
-
+            
                         // 放置出口（最后一个位置，受e5捷径影响）
                         if (walkable.length > 0) {
                             // 特殊房间：不覆盖已设置的出口
@@ -507,8 +502,6 @@ function generateCastle(returnVisit = false) {
                                                     }
             
                                                                                                 addLog(`第 ${gameState.floor} 层 - 迷宫生成完毕`, 'log-system');
-                                                                                                // 出口安全兜底：确保出口在可行走地块上且可达 (v3.43.5)
-                                                                                                ensureExitReachable();
         // 主题切换预告
         const nextThemeFloor = Math.ceil(gameState.floor / 5) * 5;
         const floorsUntilTheme = nextThemeFloor - gameState.floor;
@@ -703,70 +696,6 @@ function generateCastle(returnVisit = false) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        // 安全出口定位：从可行走地块中选远离玩家的位置 (v3.43.5)
-        function findSafeExitPos() {
-            const walkable = [];
-            for (let y = 1; y < CONFIG.MAP_HEIGHT - 1; y++) {
-                for (let x = 1; x < CONFIG.MAP_WIDTH - 1; x++) {
-                    if (gameState.map[y][x] === '.' &&
-                        !(x === gameState.player.x && y === gameState.player.y)) {
-                        walkable.push({ x, y });
-                    }
-                }
-            }
-            if (walkable.length === 0) return { x: gameState.player.x + 1, y: gameState.player.y };
-            // 按距玩家的曼哈顿距离降序排列，选远处的
-            walkable.sort((a, b) => {
-                const da = Math.abs(a.x - gameState.player.x) + Math.abs(a.y - gameState.player.y);
-                const db = Math.abs(b.x - gameState.player.x) + Math.abs(b.y - gameState.player.y);
-                return db - da;
-            });
-            // 从远处前30%中随机选一个
-            const topN = Math.max(1, Math.floor(walkable.length * 0.3));
-            return walkable[Math.floor(Math.random() * topN)];
-        }
-
-        // 出口安全兜底：确保出口在可行走地块上且可达 (v3.43.5)
-        function ensureExitReachable() {
-            const ex = gameState.exit.x, ey = gameState.exit.y;
-            if (ex < 0 || ey < 0) return; // 隐藏出口（Boss层等），跳过
-            // 1) 确保出口在地板地块上
-            if (gameState.map[ey] && gameState.map[ey][ex] !== '.') {
-                // 出口在墙上！重新定位
-                const safe = findSafeExitPos();
-                gameState.exit = safe;
-                addLog('🌀 传送门位置已修正', 'log-system');
-                return;
-            }
-            // 2) BFS 可达性检查
-            const px = gameState.player.x, py = gameState.player.y;
-            if (px === ex && py === ey) return;
-            const visited = new Set();
-            const queue = [{ x: px, y: py }];
-            visited.add(`${px},${py}`);
-            let reachable = false;
-            while (queue.length > 0) {
-                const cur = queue.shift();
-                for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) {
-                    const nx = cur.x + dx, ny = cur.y + dy;
-                    const key = `${nx},${ny}`;
-                    if (visited.has(key)) continue;
-                    if (nx < 0 || ny < 0 || nx >= CONFIG.MAP_WIDTH || ny >= CONFIG.MAP_HEIGHT) continue;
-                    if (gameState.map[ny][nx] !== '.') continue;
-                    if (nx === ex && ny === ey) { reachable = true; break; }
-                    visited.add(key);
-                    queue.push({ x: nx, y: ny });
-                }
-                if (reachable) break;
-            }
-            if (!reachable) {
-                // 不可达，强制开一条路到最近可达点
-                const safe = findSafeExitPos();
-                gameState.exit = safe;
-                addLog('🌀 传送门出现在可达位置', 'log-system');
             }
         }
         

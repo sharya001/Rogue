@@ -33,7 +33,7 @@
                                     gameState.chests = [];
                                     gameState.isBossFloor = false;
                                     gameState.isShopFloor = false;
-                                    gameState.specialRoom.state = { wave: 0, maxWaves: 3, cleared: false, exitPos: findSafeExitPos() };
+                                    gameState.specialRoom.state = { wave: 0, maxWaves: 3, cleared: false, exitPos: { x: Math.floor(CONFIG.MAP_WIDTH/2), y: CONFIG.MAP_HEIGHT - 2 } };
                                     gameState.exit = { x: -1, y: -1 }; // 未清完不可离开
                     // 在房间内放置第一波怪物（远离玩家）
                     spawnArenaWave(1);
@@ -113,11 +113,11 @@
                     gameState.isBossFloor = false;
                     gameState.isShopFloor = false;
                     gameState.specialRoom.state = { used: false };
-                    // 出口可见 (v3.43.5: 使用安全定位)
-                    gameState.exit = findSafeExitPos();
-                    }
+                    // 出口可见
+                    gameState.exit = { x: Math.floor(CONFIG.MAP_WIDTH/2), y: CONFIG.MAP_HEIGHT - 2 };
+                }
 
-                    function openAltar() {
+                function openAltar() {
                     if (gameState.specialRoom.state.used) {
                         addLog('⛓️ 祭坛已经使用过了...', 'log-system');
                         return;
@@ -183,10 +183,10 @@
                     gameState.isBossFloor = false;
                     gameState.isShopFloor = false;
                     gameState.specialRoom.state = { used: false };
-                    gameState.exit = findSafeExitPos(); // v3.43.5 安全出口定位
-                    }
+                    gameState.exit = { x: Math.floor(CONFIG.MAP_WIDTH/2), y: CONFIG.MAP_HEIGHT - 2 };
+                }
 
-                    function openLibrary() {
+                function openLibrary() {
                     if (gameState.specialRoom.state.used) {
                         addLog('📚 你已经在这里学习过了...', 'log-system');
                         return;
@@ -247,7 +247,7 @@
                                             gameState.isBossFloor = false;
                                             gameState.isShopFloor = false;
                                             gameState.gambleCount = 0;
-                                            gameState.exit = findSafeExitPos(); // v3.43.5 安全出口定位
+                                            gameState.exit = { x: Math.floor(CONFIG.MAP_WIDTH/2), y: CONFIG.MAP_HEIGHT - 2 };
                                         }
 
                                         function rollGamble() {
@@ -369,7 +369,7 @@
                                             gameState.isShopFloor = false;
                                             gameState.specialRoom.state = { used: false };
                                             gameState.isTrainingMode = false;
-                                            gameState.exit = findSafeExitPos(); // v3.43.5 安全出口定位
+                                            gameState.exit = { x: Math.floor(CONFIG.MAP_WIDTH/2), y: CONFIG.MAP_HEIGHT - 2 };
                                             // 生成幻影敌人
                                             const p = gameState.player;
                                             const scale = 1 + (gameState.floor - 1) * 0.35;
@@ -397,7 +397,7 @@
                                             gameState.isBossFloor = false;
                                             gameState.isShopFloor = false;
                                             gameState.wellUsed = false;
-                                            gameState.exit = findSafeExitPos(); // v3.43.5 安全出口定位
+                                            gameState.exit = { x: Math.floor(CONFIG.MAP_WIDTH/2), y: CONFIG.MAP_HEIGHT - 2 };
                                         }
 
                                         function makeWish(tierIdx) {

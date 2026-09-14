@@ -578,92 +578,48 @@ ice: {
         
 const SPRITES = {
     wall: [
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAD1BMVEXAy9y9bEpSYHyLm7QmK0SQ+jXFAAAAf0lEQVR4nH2NTQoCMQxGXzpZS3sB0e4FFx5hrj9Q8AKDF2gvkKlIVCg4BgLvIz9Pcjjhta1yi2+GHr4IaKQ3qkRIMkwCvTrVhoIk0mcyrA3BFqeloNsje8is+zcazs0pSfz3es8TXh7DCvk4ehSwu02XcgCZe0tWmK71h8eKN0+FbihKHwJbrgAAAABJRU5ErkJggg==",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYAgMAAACdGdVrAAAADFBMVEXAy9xSYHyLm7QmK0R+3zEEAAAAhUlEQVR4nGMMZQABllCGD2lcCUxgDgMTA2vq/w8MUB7D/v//////x/j/rwqH+AHGf3uedbUKQOVYGB7Gy6vdYmH4v4HhmRRUkPH/nytfdAQY9r/+///VP7iZAgwMrDAzWd78VeVg380YvnwNg+g0mEVMIJsYmFY8YGD4vQpuw+/V/w86AAA1rC/aT4n+NwAAAABJRU5ErkJggg==",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAFVBMVEXAy9x2Oza9bEpSYHyLm7Q/JjEmK0TMgR2IAAAAmUlEQVR4nH1PSw6CMBScfvZ9hbhvPAFNL6CJx2aBNyDxAOIFbBu2QE0BjaJxNu+9mUnmDXOiwoKxlaVZdwjL8QZpMHXwjIA9/1QwXQtopOA7I4FZZMWsAMOZ+iPdV/oJjqFhymsV6gZyvOQPUiSHdmObwVTIh7AEuBRJl9Uf2zYH0CnSK6feEX7n6MPSR9gb2CkT3Hzbcqk8H1iNKhJnhEFeAAAAAElFTkSuQmCC",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAFVBMVEXAy9xSYHy9bEqLm7R2OzY/JjEmK0Rt3U9hAAAAkElEQVR4nI2OQQ6CMBBFX6ewMjF4AaON7puQeAIPYDwp7j2DaTwAIR4ADkAKpNAYkI1/9Trtn1e1S29MaQt1sZHByxeBxOIdpRwg18sb/OuEAZ7aSjiPuU7U1xVyzGDREbzrPsbsKxzSPrI43xQ/z+ae9P6OeA6e+Q9CGrVddYInoiMZPaavV5644C9PV4IGBuX7I1FwHK6NAAAAAElFTkSuQmCC",
+        "img/wall-0.png",
+        "img/wall-1.png",
+        "img/wall-2.png",
+        "img/wall-3.png",
     ],
     floor: [
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAeElEQVR4nGM83xTynwEKCpbchTEZfEqbGUgBW7pr4ewJMcpwNhMuDcePniDa8ON41OK0gFqABZfE22NbGbYc20qxBTT3ARMyBxQ5yBFEDkDXz/hqaQ48FdECMNHScBAYtYAgGA0igmA0iAiC0SAiCEaDiCCgeRABANJ3GDvWZjo+AAAAAElFTkSuQmCC",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAASElEQVR4nGM83xTyn4GGgImWhoPAqAUDH0Qs0soSGIJP774gSrM0Fr0YFpCrkVgwmooIgtEgIghGg4ggGA0igmA0iAgCmgcRAJBaBoRvIE7ZAAAAAElFTkSuQmCC",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAeklEQVR4nGM83xTyn4GGgImWhoPAqAUDH0Qs0soSGIJP774gSrM0Fr0YFpCrERmIqBjA2W/uXKBzEDEgBQkulz9FCjJSfceCTRPIQFIMeoMWLPQPInSA7nppND4sUvG5HK8FhMAbIgyGgdGyiCAYDSKCYDSICAKaBxEAU8YbvgcbmM4AAAAASUVORK5CYII=",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAYUlEQVR4nGM83xTyn4GGgImWhoPAqAUDH0Qs0soSWCWe3n1BHQsYcAB0i5+SaSHtg4iBSCCN5CNSfEOWD6SVJTCCkKoWkAIGtwXSRATV4PYBMWDUAjDAF9GjQUQQDP0gAgA9HQ2IgeeYngAAAABJRU5ErkJggg==",
+        "img/floor-0.png",
+        "img/floor-1.png",
+        "img/floor-2.png",
+        "img/floor-3.png",
     ],
     chest: [
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAARklEQVR4nO3NQREAIBDDwKN6sYU5TMBgoK/MfegKSMZe81Qjdc6eDHHik16GOPFJL0Oc+KSXIU580ssQJz7pZYgTn6zPhxcrCgMyhzMs1gAAAABJRU5ErkJggg==",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcAQMAAABIw03XAAAABlBMVEXPglTqpWz5kV4AAAAAHElEQVR4nGNk/MfwkYmBgYEBnWCDs35gkaUFAQCA1gMm63/kcQAAAABJRU5ErkJggg==",
+        "img/chest.png",
     ],
     potion: [
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAD1BMVEUAAABp/9QllWpD4bM/JjEYfDU1AAAAAXRSTlMAQObYZgAAAHZJREFUeJyNkNEJhEAMRF8kBexZgVjJfli2HzYg2MFdB24B6sqwCJ76YSCQMJPJJPAqDPAILANUZ0SNALw0zjqOE11Bcir5PyMqVXsIeMSwIJ2b9E/FJgce+QZJ1ixXWoZPgPnB23mpNUmUcEFMt+UkC/27d8AOPUkW8Ck9yEkAAAAASUVORK5CYII=",
+        "img/potion.png",
     ],
     exit: [
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcBAMAAACAI8KnAAAAD1BMVEUAAABaaYjAy9yLm7QmK0TP0ezVAAAAAXRSTlMAQObYZgAAAG9JREFUeJyVj90JgDAMhL+WLNANxBVcoA8dvCM4gTiCA9QfUhGplkLzEDjuS46D1hhd4oEUAVu69jHJ20CAY4VR+R8cXiHfV5IPjYMFO9SCKGAlAaehbbh6u88wVdy7wrnpZ1LU+uKz1P5dQV2yPRdecRQpmUZ6/QAAAABJRU5ErkJggg==",
+        "img/exit-portal.png",
     ],
     player: [
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAABGCAYAAADW81R/AAABiElEQVR4nO1WvWrDMBDWCb9E36BDCB3cqWuhQ5cOJU+QLUPo0ofoUjp0yxOUDl06FLp6ioZgNOQN8hgpDhiErPtRsSNk/IEX6bjPd/ed7pSawACoy4/X9ZFzsHh6I30A5fzmes75V9W2Jkm0Ghg6OcHvz/fp88+kKDiD27t70VmyFAEmR4mCXCW5cFUFUjnGoCVsiNKrKD+Calt3isaBsh9hivqGVqk7uUIK6DYn1cmFf4BNsQVjw022CSMGUJeb5wd2L1q+fP1vL2qcz+ZXnH9l6x1Jkv9ToSUpsPWuc9bbXjQL1EFSm/O+ppuAHGP+0nopc1UFUjnGoCVsiNKrKD8CG9A9B8p+hCk6e6NZJL9u71CNNngEhc+ITbElY8NNtgnpANTl6rFk15b3TwPpGw37+/LyQnEw+wMZRf5vkZakwOwPnbPe9qIyUAdJbVoAJscYJ8aLyC368DJdCeUYgzaiJpL0KsqPwAR0z4GyH2GK+gZwnWyQ/Lq9k7STT4+dy4iNSc4GGzp/pRe1zLD1tbAAAAAASUVORK5CYII=",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAABCCAYAAABNYhZpAAABhklEQVR4nGNgGAUEACM+yVX9+f/xyYcVTmQkywKYwdameng1Hz19iaAlTAw0BkwDbsGenVvx8im2wMXdGy+fEGDEllrQI3ffhFY426mgGiOikQF6pNM8DhhBrieUHEkB6El34FPR0LPgKFqqIAQIqR/6QcRIKKMdxRIE+OTpntFY0G3FVsmEkSA/CgYfYMQnOacsAG+rIqVrA3mtCpjBOnoGeDVfuXSBoCVDv6hgIqTgyqULePkUW6CDFg+E4oVkCygFjNiSI7orb29YBGerBsThDTL0VMUIMpxUb5OSdAc+FQ09C66QmM6vEFA/DIOI7hntCpYwxiePntFY0AWxVTIpJMjTPYhGwcADRnyS2SEmeJstU9ecIa/ZAjPYREMSr+YzN54TtGTgi4ozN57j5VNsAaWAoAUmaPFAKF7QASO21IJuCMuNq3D2Hw1tvEGGHumMIMNJdRUpKWvg42DoWXCGxHR+hoD6YRhE1AaMhDLaGSxhjE8ePaPRZzAE2VZslQwp8ugAAPabsDI7Hj/QAAAAAElFTkSuQmCC",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAABGCAYAAADW81R/AAAArUlEQVR4nO3WIQ7DMAwFUGcaD94BhofLcoiA3SFsBxnLHQZyiLDh4R1gOCfIZDDJlaK2rlS1nf5DMbBjG5kIAADgHxgZOOeqtVZVoJRCOedeHelACzuOddeimXLwAybH5xVOrgwAAACbYmRwu3b1cj6pCrzeH7o/nmbWVcHJLZom1j28mByfV/h7AwAAwL4YGcQYq/deVSClRCGEeXcRJ7domlj/LpLj8wq1H3wB2bMqImTsVA4AAAAASUVORK5CYII=",
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAABGCAYAAADW81R/AAAAcUlEQVR4nO3KoQ2AMBCF4esE1QyARuM6BnMwCK47MEYdGs0ApLITlNQ0lwrQwP8ll8vLeyIAAOAXjA7OuWytrTmlJCEEo/vy7zYAAAAvZXSYpzEPfVfzfpyyrJvRffl3GwAAgC/w3ucYY72S2/5p07oA5vVAFZkoIZ0AAAAASUVORK5CYII=",
+        "img/player-warrior.png",
+        "img/player-mage.png",
+        "img/player-rogue.png",
+        "img/player-priest.png",
     ],
     monster: {
-        ghost: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAACaUlEQVR4nO2WPWhUQRDH//s+7pIYE0UrCwmaQlEEQdSAARvRwsI2BKtouoAIpjLEE0Et0vhZGLHQIBaCRbQTLRTBwkIDFxIRYhCJicmdd7n3dndmVu6iEQTxnjmDSGarZXfmt7M7/2HVwROHsZzmLSsNK8C/YN5/DwySOtw8de/F+nXhXh2xmfpEbT3XO14l8VdJdHg3c9+tqvtxKcY6zM4xinnaenKwY7SaGIkyrAsBEQelFuaRdvB8BaM5Wz58TYEDx253OXEoD+UtxBYBdMywJFUfOqh2Y3OjGixFBN9XUEqBGQA7zE5rFPNm6cDeA7e27GxryBpNiGILJoeoSAj8heyIAWsIpSLBaMHx3ZeP3HjZ8+CPZbGrfXWWicCW4EigjUUmcwXGCIaHH2Pk9TjYOFgjiDVBa3u1mgx/WaXXuoccfAIxw5QMFHyICLJjo9ixbTtyuRzq65sw85kwl7fYs68ZqTCAJqB7oFMlznBifL594k0Rn8bnUcwzrCbYmKAkwMjIGOpSDTAxQwkhCAQ+AN8HmhpDXDh6xyV+w4tPup99L/XThy45A0EQetjc0lJZtzGDBWAWpMJyEQnEKTAUCjO0tCplQ7CiwOShrAhxgLCAyIEsUPhCmJsySKeBMO1gSHJLAuYKERrTAfzAXwQSKwgzSAP5ksXT5x/xaPLMb8VfFTCK6K2z0ppOeRUdMjt8kyFiLSBbY+GvWZtuDT2HQs4sdpgKlB0iC5BUmkFfNbESNe/e/ee7mN1Zz1MbynosdxtDwIdp6ns42X+u5sCfrXNT/8ahd5n3SXzUyjex1ubVPOK/BvwKccs/qZKTkZkAAAAASUVORK5CYII=",
-        skeleton: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAACdUlEQVR4nO2Vu2vTURTHP/f+HkmaptJSsQ4taIWCBWsJEXWodFEQ3QQHHTpHWl38F1ycKpYiaHWoILo6isXJLrGDDkWsQmqfhqRpXr/3lQTtFCTpIzj0wL1czr18P5x77jlXXLl3jVaabCmNQ+D/kMOZ0ZEbyfah7t0C9WYOP04knivHHosPhXjKORQCxwu+fV30bk7mFz41otFUhBFTjoGqrUVtKEK6PNV9TEs1qiEbPTg5ODzFDurvShAAqxvO/l+p5gdJK2chJUhdoIV1hCb5smjheWr/gUE1sgBUoHA9wKpOYNsgZONPQa/nHD8Sb0skYiWnUsYtlfAcBxUY3J5+x2xyFMvymHiT4smtBEgDTci9AYVmdGfTRaxiHt8p13w/MhazycvVEDENyVZuG6V0pBCYOm8bBcp6zkfZ+bTjBjgBuK6gtG2RLxbfI3WUqObO4NX4VdwAQqYkn8uWJwdOqumzg2pm5MKfx1XfRDO/xYPTF9Xamo0sbFHxfQLl46MhdG3+RMw+b0QitB/toKOni9R8Jl6vNpsq/O2faYRxnFAkSqAUobYwhUKFXGb1uh9t+1W9kkLWIV8o4oXa0/U0mgL2DfQSjRksfJbg2HTILSrS5HU0myGfFXf1/r5uPRiXpjc3tfkxs2dgZmmFrJT0mAYibBBE2imsb+3sT3pLada5/y+NpoCekmyu21hhk5hfRmo2phmCxhsNTfXS/uE+4pf66e3tgmgM13XQApc7nfGHjWrozQD9cgUNWF7OMzrSA3TW/HMf1jgQ4PLiyoTj+OUX3sazM99VrYGmlmxeaul/5m3XdbgfJltK4xB4ANbyHP4GNBb1VgM7p/cAAAAASUVORK5CYII=",
-        zombie: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAACYElEQVR4nO2WS2gTQRjH/7vZZpNNrJiYFPNQoWAVSqVG2oM9FnMpBFRE9FQ8eLBVDx7Fu3jz6EG8FC/Vm9CDF0HwognUQxWh9ZnGNI/dbLKvmdmRpOhFWjdt2oP2f5j5GIb/75sH34yQvTWF3ZS4qzTsAXdA4j8PlLqZbOUpF31/5kgpX1QyvpNePLpaoejzgbvr8a9+PeYjnj3gUdpr5zK1LHBKQBwXhkEBCB2waTLvScOjpOzRXLu3TApi2hAYgWPY0HUCo+X0/gxV2X/Rzg7BZS5EwhH+UAI+N9CSZURzY0B9afvAUmx4wnVo5W7mxqzkN3G2cRNzahoP1mRMTSYwX0sB+TJsbiHaHFXscMHYMjCUO8P3qybqdRcHIn2o1xp4tBxHSZEQHVBwjb7F88Aw6FASP2o2oh5gmwKtT83FZqU5knRiWKVlNPQ6FhJpTIiHMYMIpi0RkX6OjDGJaCyIU+OD/GF+4bG2/HQam0j42/MkN0eVc6fPt1S1jGrVgtwXBJMYKrESBqwUmt9qOHb8CLR9IubYPJR+GfwjiSnFd5UtXZr2uTx5XxDa8VjgAlc1X2c8pCmwJP33vJXVFQg+G+GwDCPlv48iprddaS75X0CLx/GmlcRXOwRGgUO2DuIkcZCnwBiHU7FRLbJ7iQ08ugLWyjooU5E2l3DCL4K4wBcdeBZ42dmBWLv5DmwE6xoYkAOglIEQAUGZIsBdhJx27SCePaRugLcLGsKSCL/FcGc8Atd1UXPYzgHVav1KQxCvNlrs+swrs1Na1qpEHUxFPXsIe7+2XkvsuSP+d+BPr9wDNltcIgMAAAAASUVORK5CYII=",
-        vampire: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAACe0lEQVR4nO2VT2gTURDGv327ySZN0iQNSasQqzUeBKUVD62KVaylgiIV1Es9eao9FbSC14IHIx5EQW/x4ikoHqwgVRBFWivFaoKBtkgDbUjTpc1/s5vdt5JselAQs22ag/SDYfct781vZ4aZx/QNn0M9RepKwzZwC0T+eyCnZ3NuWhZZAiOl2lpVNRML6lPXccOVanzoirAEKx8iAMsCHKeZXJQHqvVBqt2Y/Vx8u/7OqJqVJIolk2ufUhbqKQKmQtQesgwU8sWqYVUD/b4Dg1nbKq6Pzf72PZXTwry414Mj86x635et/MomgHII6tDUl0l/Tysedu/Bh9UM7DyLHVYeQsaE13NLuHC2A9L7yOZqGDjdo3Zn7CqlFJyB6crAgKVQBifbfdiXZGBXDGDNRihKEaKQKOX5cDXAv0aYWkzhVSgOSlXIsozpWBIThTRigXcY7O1E5y4bjAIQSSu49iwMp4ufVuIE5kPrFdYZ4cfxb26FEiiK1nTPpxYgqRT3+rs0mNmEOy8nYWQVNNoJCCG43O4q13tDEQa9kmD38gzAl9fL4yt3hXT2xtc3c3AyRjzIraAoAwYOkHKA9BM4f8wHzmJ9hPnwY90R/qnmXvfIravDaHM4YeQYUFrqPQmEM4FWenItJiIezddutEULFhSP9oMQFgPEgkSSojUeQtPSBG7Hkpab0Zl8TUdbo70FDlszOHjA8wxsFgZr+888CRyUmJ19Df+E6QaeKIyhg1uGM+yH1eSBtaEFuyOjelxAV0oXv3+SxOyM0OZUhhwLoy9mEwrSOTKCpi0C+m0sD5s2qC/9UN1BryzAWacLOOiVhI2cI6izyDYQNdYvGt7g96+4VkIAAAAASUVORK5CYII=",
+        skeleton: "img/enemy-skeleton.png",
+        ghost: "img/enemy-ghost.png",
+        zombie: "img/enemy-zombie.png",
+        vampire: "img/enemy-vampire.png",
+        demon: "img/enemy-demon.png",
+        slime: "img/enemy-slime.png",
+        bat: "img/enemy-bat.png",
+        goblin: "img/enemy-goblin.png",
+        ogre: "img/enemy-ogre.png",
+        wizard: "img/enemy-wizard.png",
+        spirit: "img/enemy-spirit.png",
+        slime2: "img/enemy-slime2.png",
     },
-    boss: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAEPElEQVR4nM2XW2gcVRjH/+fMbTez2Ww2tyZqQ2ijSYwQW2hT0WAj4oMFtfoiBDFEROKDfahEX7yAD9L6IKIVJGjxRRB8EH0IhbYkkWJLa4pWSZNo2pibyWZ3szu7O7dzjsxsRKyCaTaX+cHHnLlwzo9v5nznDHns2BEEGYqAQxFwKAIORcChCDgUAYci4FAEHIqAI5faQWLEvjdcRq95bccWSe+oQCwKmWRAkI8aopcfVmd2TDBSXpTzkMIkXmyROOfFVlLDWAyo2vZX7GXOHHPFrdcJKYYkFc9zhhOfGcpVb7tgKEw++E85UQwuZDgOwBjb6BClCUoQ3YQzv4O/whPzEAKwcxbMvOOfDzTEPtt2wZDgsAoMzOUQnPnB1oIzDtPmcNe+ANeVjhy7ETm7bZPkxN72l4zyJK4vruKTK3/86z4XgGUV5Z7ZUwsYAsJF95YL5i6LjzSN9PdfGvv+xCONaAlH8GFXGUaTWVRoEiKajHJFQkiV8cXVFeRNF0893oHx8QXEl9LYMsHTh7ve9Y49P430c86hqKQzCwVywQVLF/BAe43/nJQyAS976t/dmhkDrGBvSG5dgp6c42AglU7BMW0Qmfrfm6KFUNtegeW5VTS27EIuxTAxUiyJu7p3o6nWgpPNYHliEcb4Kt48aJMtEcyusDorm8VCIgPmsH9kg0oKbA2YnEwjqqko318HJ2f7NbB59124+Ms0zl5dSic5H0xf4Ee1kNQW3kff2VTBG79lX66p5M+7Lgfnwp8AQnAMfHkR3a0NeLJjD85PzeDK1AqePtCEjtYGuA7DW59f8GtgTa0aI1Q6HpEV5HIu8qOspeohpWe9guR2/upSI6YQ3IbgnqwLQiQQQtCn1yImAx8vL6O6TsdsxkQmYyKiy5BlGYRSyGEVn/Z1QgtLoGF9qu/cueZNr4OVXSESfzhKqrpjhAvxnhDMF7WEBXut5o0vGH6Gb8UpMF9ODYdAKdm75ZuFukdrXn224+3jenIS2plvIRwTB20VZwpZMJdC1spAZQouXFBv50AlpOYtyIqL6XR4e3YzqaUVuOWNiL/4OqiRwoHELHbP3sTg0Fd44ugbcI0EMqOncN11YUD42fYWyTsblFYktkFQU9UX0qnE4PLyHCiVIFEdqG7Dcz33Y3pxBW3pacRjMRwCwcn5lP7a79fytztGSYKURxPRCh3MNrGYlhDVDGga8dfjqsp6pOrvPv11fLjXe7bhvrKNjVGKYKd0uSUkRxBWo6iM6ADXoSoRqLIOWSlDvTGBUikpg87NoQcPRc+DMY4fZyzsb6mFwfdhTm1D5OdTMFfn87hjBwVXs2aCcAGHMSQyDpz8KsqsYdwjfYdhIwvLdn7w/lB2TPCkTnsBpxfe9r5RQvOv9vuKbr3icIA7oZpvmpR1ztVNWkl2AoqAQxFwKAIORcChCDgUAYfutMD/8SfSKc8fiOGfCQAAAABJRU5ErkJggg==",
-        // 特殊房间类型
-        SPECIAL_ROOM_CHANCE: 0.15,  // 非Boss/非商店层 ~15% 概率出现特殊房间
-            SPECIAL_ROOMS: [
-                            { id: 'treasure', icon: '💰', name: '宝藏室', color: '#fc6', desc: '满地的金币等你来捡！' },
-                            { id: 'arena',    icon: '⚔️', name: '竞技场', color: '#f44', desc: '连打3波怪物，赢取丰厚奖励！' },
-                            { id: 'altar',    icon: '⛓️', name: '祭坛',   color: '#c6f', desc: '献祭一件装备，换取永久属性加成' },
-                            { id: 'library',  icon: '📚', name: '图书馆', color: '#6cf', desc: '免费学习一个天赋！' },
-                            { id: 'gamble',   icon: '🎰', name: '赌博商人', color: '#fa0', desc: '消耗金币转动轮盘，赢取随机奖励！' },
-                            { id: 'rift',     icon: '🕳️', name: '时空裂缝', color: '#f0f', desc: '红色门跳层，蓝色门回退——选择你的命运！' },
-                            { id: 'training', icon: '🏋️', name: '训练场', color: '#6f6', desc: '与幻影安全对战，不消耗HP，纯经验奖励！' },
-                            { id: 'well',     icon: '🌟', name: '许愿井', color: '#ff0', desc: '投入金币，许愿获得装备！' },
-                        ],
-            // 环境效果：某些楼层带全局debuff
-            ENV_EFFECT_CHANCE: 0.2,   // 非特殊层 ~20% 概率
-            ENV_EFFECTS: [
-                            { id: 'poisonMist',  icon: '☠️', name: '毒雾',   color: '#5f5', desc: '每步移动受到 5% 最大生命值的毒素伤害' },
-                            { id: 'darkness',    icon: '🌑', name: '黑暗',   color: '#222', desc: '视野缩小至 4 格范围，外围一片漆黑' },
-                            { id: 'magicChaos',  icon: '🌀', name: '魔力紊乱', color: '#f6f', desc: '主动技能冷却时间翻倍' },
-                        ],
-                        // 药水系统（v3.26.0）
-                                    POTION_TYPES: [
-                                        { id:'health',  name:'生命药水',     icon:'❤️', mapIcon:'🧪', color:'#f44', desc:'恢复30%最大HP', rarity:'common' },
-                                        { id:'mana',    name:'法力药水',     icon:'💙', mapIcon:'💙', color:'#44f', desc:'主动技能冷却-2', rarity:'common' },
-                                        { id:'shield',  name:'护盾药水',     icon:'🛡️', mapIcon:'🛡️', color:'#ff0', desc:'获得20护盾（可叠加）', rarity:'common' },
-                                        { id:'speed',   name:'速度药水',     icon:'⚡', mapIcon:'⚡', color:'#0ff', desc:'本层无视碰撞3回合', rarity:'uncommon' },
-                                        { id:'power',   name:'力量药水',     icon:'💪', mapIcon:'💪', color:'#f80', desc:'本层攻击力+30%', rarity:'uncommon' },
-                                        { id:'aoePoison',name:'毒药',        icon:'☠️', mapIcon:'☠️', color:'#c0f', desc:'全图敌人追加中毒', rarity:'uncommon' },
-                                        { id:'greedLure',name:'贪婪诱饵',    icon:'🎣', mapIcon:'🎣', color:'#fc6', desc:'本层掉落+200% 怪物攻击+30%', rarity:'rare' },
-                                        { id:'chronos',  name:'时空凝滞药水', icon:'🕰️', mapIcon:'🕰️', color:'#faf', desc:'下次致命伤害保留1HP', rarity:'rare' },
-                                        { id:'berserker',name:'狂战士之血',   icon:'🩸', mapIcon:'🩸', color:'#f33', desc:'攻击+50%暴击+20% 攻击扣5%HP', rarity:'rare' },
-                                        { id:'thorns',   name:'荆棘反伤药剂', icon:'🛡️', mapIcon:'🛡️', color:'#6f6', desc:'5回合反弹50%伤害+等额护盾', rarity:'epic' },
-                                        { id:'gamble',   name:'炼金师的盲盒', icon:'📦', mapIcon:'📦', color:'#fa0', desc:'随机生成一瓶未知效果药水', rarity:'epic' },
-                                    ],
-                                    POTION_BELT_MAX: 4,
-                                                // 赌博商人奖池 (v3.28.0)
-                                                GAMBLE_POOL: [
-                                                    { type:'nothing', weight:40, msg:'什么也没发生...' },
-                                                    { type:'gold', weight:25, amount:50, msg:'获得了50金币！' },
-                                                    { type:'potion', weight:15, msg:'获得了一瓶随机药水！' },
-                                                    { type:'equipment', weight:10, msg:'获得了一件装备！' },
-                                                    { type:'talent', weight:8, msg:'天赋点+1！' },
-                                                    { type:'skipBoss', weight:2, msg:'🌟 获得Boss直通令牌！' },
-                                                ],
-                                                GAMBLE_COST: 20,
-                                                GAMBLE_MAX_PER_FLOOR: 3,
-                                                // 许愿井配置 (v3.28.0)
-                                                WELL_TIERS: [
-                                                    { cost: 10, name:'铜币', equipChance: 0.20, qualityMin: 0, qualityMax: 2 },
-                                                    { cost: 50, name:'银币', equipChance: 1.0, qualityMin: 3, qualityMax: 5 },
-                                                    { cost: 200, name:'金币', equipChance: 1.0, legendary: true },
-                                                ],
-                                            };
+    boss: "img/boss.png",
+};
 let spriteMode = false;
         
         // ==================== 游戏状态 ====================

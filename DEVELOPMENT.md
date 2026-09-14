@@ -225,6 +225,12 @@ keydown 处理器中 `introEl` 和 `startScr` 必须 null-check，否则元素�
 - 中断时按钮图标切换为 ✋，显示 "⚠️ 自动攻击已中断" 日志
 - 注意：ESC 中断后玩家可手动移动/攻击，`gameState.autoAttack = false` 保持状态
 
+### 20. 传送门出口定位 (v3.43.5)
+- **禁止硬编码出口坐标**：`{ x: MAP_WIDTH/2, y: MAP_HEIGHT-2 }` 可能是墙壁
+- **必须使用 `findSafeExitPos()`**：从可行走地块中选远离玩家的地板位置
+- **兜底 `ensureExitReachable()`**：generateMap() 末尾自动检查出口在地板地块 + BFS 可达
+- 适用场景：所有特殊房间生成器、任何需要动态放置出口的逻辑
+
 ---
 
 ## 调试技巧

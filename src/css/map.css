@@ -39,6 +39,14 @@
     text-align: center;
 }
 
+/* 精灵模式 - pre 下 span 需要固定宽度 */
+#map-display span.sprite-cell {
+    display: inline-block !important;
+    width: 1.5em !important;
+    height: 1.5em !important;
+    vertical-align: top;
+}
+
 /* 实体颜色 */
 .player { color: #0ff; }
 .player.stepping { animation: step-pulse 0.3s ease-out; }
@@ -101,7 +109,8 @@
     width: 28px !important;
     height: 28px !important;
     font-size: 0 !important;
-    display: inline-block !important;
+    display: inline-flex !important;
+    vertical-align: middle;
 }
 .sprite-player { image-rendering: pixelated; }
 .sprite-boss { image-rendering: pixelated; }
