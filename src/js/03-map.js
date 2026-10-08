@@ -814,56 +814,56 @@ function generateCastle(returnVisit = false) {
                     // 检查是否有实体
                     if (x === gameState.player.x && y === gameState.player.y) {
                         const pc = CONFIG.CLASSES[gameState.playerClass];
-                        text = pc ? pc.playerIcon : '🧙';
+                        text = renderIcon(pc ? pc.playerIcon : '🧙');
                         className = 'player';
                                             } else if (gameState.castleReturnPortal && x === gameState.castleReturnPortal.x && y === gameState.castleReturnPortal.y) {
-                                                                                            text = '🏰';
+                                                                                            text = renderIcon('🏰');
                                                                                             className = 'exit';
                                                                                             style = 'font-size:1.8em; color:#fc6;';
                                                                                         } else if (gameState.eventNPC && x === gameState.eventNPC.x && y === gameState.eventNPC.y) {
-                                                                                            text = '🧙';
+                                                                                            text = renderIcon('🧙');
                                                                                             className = 'shop-npc';
                                                                                             style = 'color:#c6f; font-size:1.4em;';
                                                                                         } else if (x === gameState.exit.x && y === gameState.exit.y) {
                                                                         // 钥匙系统：锁定出口显示 🔒，只有 exitLocked=false（走到传送门解锁后）才显示 🌀（v3.42.0）
                                                                         if (!gameState.exitLocked) {
-                                                                            text = '🌀';
+                                                                            text = renderIcon('🌀');
                                                                             className = 'exit';
                                                                             style = 'font-size:1.5em;';
                                                                         } else {
-                                                                            text = '🔒';
+                                                                            text = renderIcon('🔒');
                                                                             className = 'exit';
                                                                             style = 'font-size:1.2em; color:#888;';
                                                                         }
                     } else if (gameState.map[y][x] === '#') {
-                        text = themeObj.wall;
+                        text = renderIcon(themeObj.wall, null, 'wall');
                         className = 'wall';
                         style = `color:${themeObj.wallColor}`;
                     } else {
                         // 检查敌人
                         // 稀有怪
                         if (gameState.rareMonster && gameState.rareMonster.x === x && gameState.rareMonster.y === y) {
-                            text = '💎';
+                            text = renderIcon('💎');
                             className = 'rare-monster';
                         }
                         // 敌人
                         const enemy = gameState.enemies.find(e => e.x === x && e.y === y);
                         if (enemy) {
                             if (enemy.isBoss) {
-                                                            text = '🐲';
+                                                            text = renderIcon('🐲');
                                                             className = 'boss';
                                                         } else if (enemy.isElite) {
-                                                                                        text = '👑';
+                                                                                        text = renderIcon('👑');
                                                                                         className = 'elite';
                                                         } else {
-                                text = enemy.emoji || '👹';
+                                text = renderIcon(enemy.emoji || '👹');
                                 className = 'enemy';
                             }
                         } else {
                             // 检查药水
                                                         const potion = gameState.potions.find(p => p.x === x && p.y === y);
                                                         if (potion) {
-                                                            text = potion.icon || '🧪';
+                                                            text = renderIcon(potion.icon || '🧪');
                                                             className = 'potion';
                                                             style = `color:${potion.color || '#0f0'}; font-size:1.1em;`;
                                                         } else {
@@ -871,21 +871,21 @@ function generateCastle(returnVisit = false) {
                                 const chest = gameState.chests.find(c => c.x === x && c.y === y);
                                 if (chest) {
                                     if (chest.type === 'key') {
-                                        text = '🔑';
+                                        text = renderIcon('🔑');
                                         className = 'potion';
                                         style = 'color:#fc6; font-size:1.2em;';
                                     } else {
-                                        text = '📦';
+                                        text = renderIcon('📦');
                                         className = 'chest';
                                     }
                                 } else if (gameState.isShopFloor) {
                                                                     // 检查 NPC
                                                                     const npc = gameState.shopNPCs.find(n => n.x === x && n.y === y);
                                                                     if (npc) {
-                                                                        text = npc.icon;
+                                                                        text = renderIcon(npc.icon);
                                                                         className = 'shop-npc';
                                                                     } else {
-                                                                         text = themeObj.floor;
+                                                                         text = renderIcon(themeObj.floor, null, 'floor');
                                                                          className = 'floor ' + (gameState.theme || 'abyss') + '-floor';
                                                                          style = `color:${themeObj.floorColor}`;
                                                                      }
@@ -894,28 +894,28 @@ function generateCastle(returnVisit = false) {
                                                                     if (isCastle) {
                                                                         const cnpc = gameState.castleNPCs.find(n => n.x === x && n.y === y);
                                                                         if (cnpc) {
-                                                                            text = cnpc.icon;
+                                                                            text = renderIcon(cnpc.icon);
                                                                             className = 'shop-npc';
                                                                             style = 'color:#fa0; font-size:1.4em; cursor:pointer;';
                                                                         } else if (x === gameState.castlePortal.x && y === gameState.castlePortal.y) {
-                                                                                                                                                    text = '🌀';
+                                                                                                                                                    text = renderIcon('🌀');
                                                                                                                                                     className = 'exit';
                                                                                                                                                     style = 'font-size:2em;';
                                                                                                                                                 } else {
                                                                                                                                                     // 检查装饰物
                                                                                                                                                     const deco = gameState.castleDecorations.find(d => d.x === x && d.y === y);
                                                                                                                                                     if (deco) {
-                                                                                                                                                        text = deco.icon; className = 'deco'; style = `color:${deco.color}; font-size:${deco.size};`;
+                                                                                                                                                        text = renderIcon(deco.icon); className = 'deco'; style = `color:${deco.color}; font-size:${deco.size};`;
                                                                                                                                                     } else if (gameState.castleCarpet && gameState.castleCarpet.find(c => c.x === x && c.y === y)) {
                                                                                                                                                         text = '◆'; className = 'floor'; style = 'color:#a33;';
                                                                                                                                                     } else {
-                                                                        text = themeObj.floor;
+                                                                        text = renderIcon(themeObj.floor, null, 'floor');
                                                                          className = 'floor ' + (gameState.theme || 'abyss') + '-floor';
                                                                          style = `color:${themeObj.floorColor}`;
                                                                      }
                                                                                                                                                 }
                                                                     } else {
-                                                                        text = themeObj.floor;
+                                                                        text = renderIcon(themeObj.floor, null, 'floor');
                                                                         className = 'floor';
                                                                         style = `color:${themeObj.floorColor}`;
                                                                     }
@@ -927,11 +927,11 @@ function generateCastle(returnVisit = false) {
                                                                                                                                                             // 特殊房间：宝藏室金币
                                                                                                                                                                                                                                                                                                                         if (gameState.specialRoom && gameState.specialRoom.type === 'treasure' && gameState.treasureCoins) {
                                                                                                                                                                                                                                                                                                                             const coin = gameState.treasureCoins.find(c => c.x === x && c.y === y);
-                                                                                                                                                                                                                                                                                                                            if (coin) { text = '💰'; className = 'potion'; style = 'color:#fc6; font-size:1.1em;'; }
+                                                                                                                                                                                                                                                                                                                            if (coin) { text = renderIcon('💰'); className = 'potion'; style = 'color:#fc6; font-size:1.1em;'; }
                                                                                                                                                                                                                                                                                                                         }
                                                                                                                                                                                                                                                                                                                         // 特殊房间标记渲染
                                                                                                                                                                                                                                                                                                                         const overlay = renderSpecialOverlay(x, y);
-                                                                                                                                                                                                                                                                                                                        if (overlay) { text = overlay.text; className = overlay.className; style = overlay.style; }
+                                                                                                                                                                                                                                                                                                                        if (overlay) { text = renderIcon(overlay.text); className = overlay.className; style = overlay.style; }
                                                                                                                                                                                                                                                                                                                         // 环境效果：黑暗
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             if (gameState.envEffect && gameState.envEffect.id === 'darkness') {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 const dist = Math.abs(x - gameState.player.x) + Math.abs(y - gameState.player.y);

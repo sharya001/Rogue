@@ -98,6 +98,31 @@
 .dark-fog { color: #111 !important; opacity: 0.15; }
 .deco { text-shadow: 0 0 4px currentColor; }
 
+/* SVG 图标（emoji → 矢量重绘） */
+#map-display span svg.ic {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 0;
+    filter: drop-shadow(0 1.5px 1px rgba(0,0,0,.55));
+}
+/* 关键实体光晕（text-shadow 对 SVG 无效，改用 currentColor 的 drop-shadow） */
+#map-display span.exit svg.ic,
+#map-display span.boss svg.ic,
+#map-display span.elite svg.ic,
+#map-display span.rare-monster svg.ic,
+#map-display span.potion svg.ic {
+    filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 1.5px 1px rgba(0,0,0,.55));
+}
+/* 墙块：放大至近乎满格，格间细缝即砖缝，形成连续砌块墙 */
+#map-display span.wall svg.ic {
+    width: 1.15em;
+    height: 1.15em;
+    filter: none;
+}
+#map-display span.wall {
+    line-height: 1;
+}
+
 /* 精灵模式 */
 .sprite-cell {
     background-size: cover !important;

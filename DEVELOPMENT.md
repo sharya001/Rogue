@@ -69,9 +69,11 @@ Rogue/
 ## 代码架构（17 模块）
 
 ```
-MODULE 1: 核心配置与状态 (01-config.js, ~780行)
+MODULE 1: 核心配置与状态 (01-config.js, ~838行)
   - CONFIG: 地图/敌人/装备/品质/词缀/套装/职业/天赋/精英/升级/成就/药水/赌博/许愿井/突变/Boss
   - gameState: 初始状态 + restartGame() 双处初始化
+  - SVG 图标系统：SVG_ICONS 图标库 + renderIcon(ch, size, ctx)（emoji → 矢量，`fill="currentColor"` 继承实体色；ctx 为上下文前缀，查 "ctx|ch" 实现墙/地板/怪物同 emoji 分形，未命中回落裸 key 或原字符）
+    - 已覆盖：玩家 4 职业、20 物件（Boss/精英/稀有/药水/宝箱/钥匙/金币/传送门/锁/城堡/特殊房间8）、31 怪物、8 主题墙块（wall|）、7 主题地板（floor|）→ 地牢地图 405 格墙/地板/实体全矢量（城堡墙 `░` 与城堡装饰物除外）
 
 MODULE 2: 音频引擎 (02-audio.js, ~170行)
   - SFX 18种音效 / BGM 已禁用
